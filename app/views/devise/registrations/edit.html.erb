@@ -1,0 +1,48 @@
+<div id="devise-override-window" class="container text-center">
+  <div class="row">
+    <div class="col-md-12">
+      <h2 class="form-devise-override-heading">Edit <%= resource_name.to_s.humanize %></h2>
+    </div>
+  </div>
+
+  <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, class: 'form-devise-override' }) do |f| %>
+      <%= devise_error_messages! %>
+
+      <%= f.email_field :email, autofocus: true, autocomplete: "off", class: 'form-control', placeholder: 'Email adress' %>
+
+      <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+          <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+      <% end %>
+
+      <%= f.text_field :username, autocomplete: "off", class: 'form-control', placeholder: 'Desired username' %>
+
+      <%= f.password_field :password, class: 'form-control', autocomplete: "off", placeholder: '(leave blank if you don\'t want to change it)' %>
+
+      <%= f.password_field :password_confirmation, class: 'form-control', autocomplete: "off", placeholder: 'Password confirmation' %>
+
+      <%= f.password_field :current_password, class: 'form-control', autocomplete: "off", placeholder: '(we need your current password to confirm your changes)' %>
+
+      <div class="actions">
+        <%= f.submit "Update", class: 'btn btn-lg btn-primary btn-block' %>
+      </div>
+  <% end %>
+
+
+  <div class="row">
+    <div class="col-md-12">
+      <h3 class="form-devise-override-heading">Cancel my account</h3>
+    </div>
+  </div>
+
+  <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { data: { confirm: "Are you sure?" }, method: :delete, class: 'form-devise-override' }) do |f| %>
+      <p>Unhappy?</p>
+      <%= f.submit "Cancel my account", class: 'btn btn-lg btn-danger btn-block' %>
+  <% end %>
+
+  <div class="row">
+    <div class="col-md-12">
+      <%= link_to "Back", :back %>
+    </div>
+  </div>
+
+</div>

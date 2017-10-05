@@ -1,0 +1,20 @@
+<div id="devise-override-window" class="container text-center">
+  <div class="row">
+    <div class="col-md-12">
+      <h2 class="form-devise-override-heading">Forgot your password?</h2>
+    </div>
+  </div>
+
+  <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: {  method: :post, class: 'form-devise-override'}) do |f| %>
+      <%= devise_error_messages! %>
+
+      <%= f.email_field :email, autofocus: true,  autocomplete: "off", class: 'form-control', placeholder: 'Email adress' %>
+
+      <div class="actions">
+        <%= f.submit "Send me reset instructions", class: 'btn btn-lg btn-primary btn-block' %>
+      </div>
+  <% end %>
+
+  <%= render "devise/shared/links" %>
+
+</div>

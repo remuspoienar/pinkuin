@@ -1,0 +1,26 @@
+<div id="devise-override-window" class="container text-center">
+  <div class="row">
+    <div class="col-md-12">
+      <h2 class="form-devise-override-heading">Sign up</h2>
+    </div>
+  </div>
+
+  <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: 'form-devise-override' }) do |f| %>
+      <%= devise_error_messages! %>
+
+      <%= f.email_field :email, autofocus: true, autocomplete: "off", class: 'form-control', placeholder: 'Email address' %>
+
+      <%= f.text_field :username, autocomplete: "off", class: 'form-control', placeholder: 'Desired username' %>
+
+      <%= f.password_field :password, class: 'form-control', autocomplete: "off", placeholder: "Password (#{@minimum_password_length} characters minimum)" %>
+
+      <%= f.password_field :password_confirmation, class: 'form-control', autocomplete: "off", placeholder: 'Password confirmation' %>
+
+      <div class="actions">
+        <%= f.submit "Sign up", class: 'btn btn-lg btn-primary btn-block' %>
+      </div>
+  <% end %>
+
+  <%= render "devise/shared/links" %>
+
+</div>
