@@ -1,39 +1,139 @@
-#devise-override-window
-  background-color: #eee
-  width: 70%
+$danger-color: darken(red, 15%)
+$primary-color: orange
+$accent-color: rebeccapurple
+$background-grey: #2E2F30
 
-.form-devise-override
-  max-width: 330px
-  padding: 15px
-  margin: 0 auto
+$box-shadow-color: #222
+$text-shadow-color: #000
 
-  .form-devise-override-heading, .checkbox
-    margin-bottom: 10px
+body
+  background: $background-grey
 
-  .checkbox
-    font-weight: normal
+  .navbar
+    border-radius: 0
 
-  .form-control
-    position: relative
-    height: auto
-    -webkit-box-sizing: border-box
-    -moz-box-sizing: border-box
-    box-sizing: border-box
-    padding: 10px
-    font-size: 16px
+    ul
+      display: inline-block
 
-    &:focus
-      z-index: 2
+  .flash-container
+    text-align: center
+    .alert
+      box-shadow: 10px 15px 5px 5px $box-shadow-color
 
-  input[type="email"]
-    margin-bottom: -1px
-    border-bottom-right-radius: 0
-    border-bottom-left-radius: 0
+  .devise-container
+    margin: auto
 
-  input[type="password"]
-    margin-bottom: 10px
-    border-top-left-radius: 0
-    border-top-right-radius: 0
+    .form-devise-override-heading
+      color: #ccc
+      text-align: center
+      text-shadow: 2px 2px 2px $accent-color
 
-#navbar ul
-  display: inline-block
+    .form-base
+      background-color: #eee
+      width: 23.5em
+      border-radius: 2%
+      margin: auto
+      box-shadow: 10px 15px 5px 5px $box-shadow-color
+
+      & > .no-padding
+        padding: 0
+
+      .form-errors
+        color: $danger-color
+
+        #error_explanation
+          h2
+            font-size: 1.7em
+          ul
+            padding: 0
+
+      .form-devise-override
+        @extend .text-center
+
+        .with-padding
+          padding: 2em
+          height: 25em
+
+          .email-group, .password-group
+            display: flex
+            justify-content: center
+            align-items: center
+
+            .fa
+              color: $background-grey
+              margin-right: 6%
+              position: absolute
+              left: 1em
+
+            .form-control
+              color: $accent-color
+              width: 90%
+              &:focus
+                border-color: $accent-color
+                box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px $accent-color
+
+            .field_with_errors
+              width: 100%
+              margin-left: 1em
+
+              .form-control
+                width: 95%
+
+          .checkbox-group
+            transition: color 0.2s ease-in-out
+            &:hover
+              color: $primary-color
+            [type="checkbox"]
+              vertical-align: -3px
+            label
+              font-weight: bold
+
+          .links
+            margin: 0 auto
+            position: absolute
+            left: 0
+            right: 0
+            bottom: 5em
+
+            a
+              color: $background-grey
+              text-decoration: none
+              transition: color .2s ease-in-out
+
+              &:hover
+                color: $accent-color
+                border-bottom: 1px solid $primary-color
+
+        .actions
+          height: 4em
+
+          .btn-submit
+            @extend .btn-warning
+
+            border-top-left-radius: 0
+            border-top-right-radius: 0
+
+            color: #ffff
+
+            width: 100%
+            height: 100%
+
+            background: $primary-color
+            text-transform: uppercase
+
+            transition: all 0.2s ease-in-out
+
+            &:hover
+              color: lighten($accent-color, 10%)
+              background: darken($primary-color, 10%)
+
+          .btn-submit-danger
+            @extend .btn-submit
+            @extend .btn-danger
+            background: $danger-color
+            border-color: $danger-color
+            border-bottom-left-radius: 3%
+            border-bottom-right-radius: 3%
+
+            &:hover
+              background: lighten($danger-color, 10%)
