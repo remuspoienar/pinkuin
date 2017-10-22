@@ -10,10 +10,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171003190811) do
+ActiveRecord::Schema.define(version: 20171021150224) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "projects", force: :cascade do |t|
+    t.string "name"
+    t.text "description"
+    t.bigint "author_id"
+    t.string "status"
+    t.string "api_host"
+    t.json "properties"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["author_id"], name: "index_projects_on_author_id"
+    t.index ["name"], name: "index_projects_on_name"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
@@ -42,4 +55,5 @@ ActiveRecord::Schema.define(version: 20171003190811) do
     t.index ["unlock_token"], name: "index_users_on_unlock_token", unique: true
   end
 
+  add_foreign_key "projects", "users", column: "author_id"
 end
