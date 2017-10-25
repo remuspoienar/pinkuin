@@ -38,7 +38,7 @@
 
             <fieldset class="email-group">
               <%= fa_icon 'user-o' %>
-              <%= f.select :author_id, options_for_select(User.all.map { |u| [u.username, u.id] }), {}, class: 'form-control', placeholder: 'Select author' %>
+              <%= f.select :author_id, author_select_options, {}, class: 'form-control', placeholder: 'Select author' %>
             </fieldset>
 
             <br>

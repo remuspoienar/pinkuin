@@ -9,7 +9,7 @@
               <h3 class="panel-title">All projects</h3>
             </div>
             <div class="col col-xs-6 text-right">
-              <%= link_to 'New Project', new_project_path, class: 'btn btn-sm btn-primary btn-create' %>
+              <%= button_to 'New Project', new_project_path, method: :get, class: 'btn btn-sm btn-primary btn-create', disabled: !policy?(:new) %>
             </div>
           </div>
           <div class="row">
@@ -30,11 +30,22 @@
             </thead>
             <tbody>
             <% @projects.each do |project| %>
+              <% project_policy = policy(project) %>
               <tr>
                 <td align="center">
-                  <%= link_to fa_icon('pencil').html_safe, edit_project_path(project), class: 'btn btn-default' %>
-                  <%= link_to fa_icon('trash').html_safe, project, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
+                  <%= button_to project, method: :get, class: 'btn btn-default', disabled: !project_policy.show? do %>
+                    <%= fa_icon('eye') %>
+                  <% end %>
+
+                  <%= button_to edit_project_path(project), method: :get, class: 'btn btn-default', disabled: !project_policy.edit? do %>
+                    <%= fa_icon('pencil') %>
+                  <% end %>
+
+                  <%= button_to project, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger', disabled: !project_policy.destroy? do %>
+                    <%= fa_icon('trash') %>
+                  <% end %>
                 </td>
+
                 <% Project.column_names.each do |column| %>
                   <td><%= project[column] || '(empty)' %></td>
                 <% end %>

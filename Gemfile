@@ -38,6 +38,7 @@ gem 'devise'
 
 # authorization
 gem 'pundit'
+gem 'rolify'
 
 # fonts
 gem 'font-awesome-rails'

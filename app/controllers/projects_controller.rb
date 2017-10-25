@@ -1,11 +1,11 @@
 class ProjectsController < ApplicationController
-  before_action :set_project, only: [:show, :edit, :update, :destroy]
-  before_action :authenticate_user!, except: [:index, :show]
+  before_action :set_and_authorize_project!, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!
 
   # GET /projects
   # GET /projects.json
   def index
-    @projects = Project.all.page(params.fetch(:page, 1)).per(params.fetch(:per, 25))
+    @projects = policy_scope(Project).page(params.fetch(:page, 1)).per(params.fetch(:per, 25))
   end
 
   # GET /projects/1
@@ -15,6 +15,7 @@ class ProjectsController < ApplicationController
 
   # GET /projects/new
   def new
+    authorize Project
     @project = Project.new
   end
 
@@ -25,6 +26,7 @@ class ProjectsController < ApplicationController
   # POST /projects
   # POST /projects.json
   def create
+    authorize Project
     @project = Project.new(project_params)
 
     respond_to do |format|
@@ -67,8 +69,9 @@ class ProjectsController < ApplicationController
   attr_reader :project
 
   # Use callbacks to share common setup or constraints between actions.
-  def set_project
+  def set_and_authorize_project!
     @project = Project.find(params[:id])
+    authorize project
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.
