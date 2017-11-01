@@ -6,9 +6,9 @@ class Project < ApplicationRecord
 
   resourcify
 
-  STATUS_ACTIVE = 'active'.freeze
+  STATUS_ACTIVE   = 'active'.freeze
   STATUS_INACTIVE = 'inactive'.freeze
 
-  validates :name, length: {minimum: 6}
+  validates :name, length: { minimum: 6, maximum: 32 }
 
 end

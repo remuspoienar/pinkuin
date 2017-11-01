@@ -1,0 +1,63 @@
+<div class="container devise-container">
+  <div class="row">
+    <div class="col-md-12">
+      <h2 class="form-devise-override-heading">USER DETAILS</h2>
+    </div>
+  </div>
+
+  <div class="row">
+    <br>
+  </div>
+
+  <div class="form-base row">
+    <div class="col-md-12">
+
+      <div class="text-center">
+        <br>
+
+        <%= fa_icon 'envelope-o' %>
+        <label class="control-label">Email address</label>
+        <div class="well well-sm"><%= user.email %></div>
+
+        <br>
+
+        <%= fa_icon 'envelope-o' %>
+        <label class="control-label">Username</label>
+        <div class="well well-sm"><%= user.username %></div>
+
+        <br>
+
+        <% if user.roles.any? %>
+
+          <%= fa_icon 'user-o' %>
+          <label class="control-label">Assigned roles</label>
+          <div class="well well-sm">
+            <% user.roles.each do |role| %>
+              <p><%= role.name + ' : ' + role.resource_type.to_s %></p>
+            <% end %>
+          </div>
+
+          <br>
+        <% end %>
+
+        <div>
+          <div class="inline-form-wrapper">
+            <%= button_to edit_admin_user_path(user), method: :get, class: 'btn btn-warning', disabled: !instance_policy?(:edit) do %>
+              <%= fa_icon('pencil') %> Edit
+            <% end %>
+
+            <%= button_to admin_user_path(user), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger', disabled: !instance_policy?(:destroy) do %>
+              <%= fa_icon('trash') %> Delete
+            <% end %>
+          </div>
+          <br>
+          <%= link_to 'Back to all users', admin_users_path %>
+          <p></p>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+</div>

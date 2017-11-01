@@ -43,6 +43,15 @@
 
             <br>
 
+            <% if policy(project).project_admin? %>
+              <fieldset class="email-group">
+                <%= fa_icon 'heart' %>
+                <%= f.select :status, options_for_select([Project::STATUS_ACTIVE, Project::STATUS_INACTIVE], project.status), {}, class: 'form-control', placeholder: 'Select author' %>
+              </fieldset>
+
+              <br>
+            <% end %>
+
             <div class="links">
 
               <% unless project.new_record? %>

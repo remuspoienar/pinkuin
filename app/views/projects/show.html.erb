@@ -33,6 +33,14 @@
 
         <br>
 
+        <% if policy(project).project_admin? %>
+          <%= fa_icon 'heart' %>
+          <label class="control-label">Status</label>
+          <div class="well well-sm"><%= project.status %></div>
+
+          <br>
+        <% end %>
+
         <div class="a">
           <div class="inline-form-wrapper">
             <%= button_to edit_project_path(project), method: :get, class: 'btn btn-warning', disabled: !instance_policy?(:edit) do %>

@@ -5,5 +5,9 @@ Rails.application.routes.draw do
 
   resources :projects
 
+  namespace :admin do
+    resources :users
+  end
+
   root to: 'projects#index'
 end
