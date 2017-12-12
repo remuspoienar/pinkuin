@@ -9,11 +9,11 @@ class ProjectPolicy < ApplicationPolicy
   end
 
   def create?
-    @create ||= user.has_role? :create, Project || project_admin?
+    @create ||= (user.has_role? :create, Project) || project_admin?
   end
 
   def update?
-    @update ||= record.author == user || project_admin?
+    @update ||= (record.author == user) || project_admin?
   end
 
   def destroy?

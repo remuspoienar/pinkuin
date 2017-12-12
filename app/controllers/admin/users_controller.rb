@@ -1,6 +1,5 @@
 class Admin::UsersController < ApplicationController
   before_action :set_and_authorize_user!, only: [:show, :edit, :update, :destroy]
-  before_action :correct_roles_params, only: [:update]
 
   # GET /admin/users
   # GET /admin/users.json
@@ -65,11 +64,6 @@ class Admin::UsersController < ApplicationController
   end
 
   private
-
-  def correct_roles_params
-    roles_attributes                 = user_params.delete(:roles_attributes).to_h.map { |_, v| v }
-    params[:user][:roles_attributes] = roles_attributes
-  end
 
   # Use callbacks to share common setup or constraints between actions.
   def set_and_authorize_user!
