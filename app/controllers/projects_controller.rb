@@ -1,6 +1,10 @@
 class ProjectsController < ApplicationController
-  before_action :set_and_authorize_project!, only: [:show, :edit, :update, :destroy]
+
   before_action :authenticate_user!
+
+  before_action :set_and_authorize_project!, only: %i[show edit update destroy]
+
+  before_action :authorize_project_action!, only: %i[index new create]
 
   # GET /projects
   # GET /projects.json
@@ -15,7 +19,6 @@ class ProjectsController < ApplicationController
 
   # GET /projects/new
   def new
-    authorize Project
     @project = Project.new
   end
 
@@ -26,7 +29,6 @@ class ProjectsController < ApplicationController
   # POST /projects
   # POST /projects.json
   def create
-    authorize Project
     @project = Project.new(project_params)
 
     respond_to do |format|
@@ -57,7 +59,7 @@ class ProjectsController < ApplicationController
   # DELETE /projects/1
   # DELETE /projects/1.json
   def destroy
-    @project.destroy
+    project.destroy
     respond_to do |format|
       format.html { redirect_to projects_url, notice: 'Project was successfully destroyed.' }
       format.json { head :no_content }
@@ -71,7 +73,11 @@ class ProjectsController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_and_authorize_project!
     @project = Project.find(params[:id])
-    authorize project
+    authorize_project_action!
+  end
+
+  def authorize_project_action!
+    authorize project || Project
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.

@@ -1,0 +1,71 @@
+.container.devise-container
+  .row
+    .col-md-12
+      %h2.form-devise-override-heading PROJECT DETAILS
+
+  .row %br
+
+  .row.form-base
+    .col-md-12
+      .text-center
+
+        %br
+
+        = fa_icon 'briefcase'
+
+        %label.control-label
+          Name
+
+        .well.well-sm
+          = project.name
+
+        %br
+
+        = fa_icon 'pencil'
+
+        %label.control-label
+          Description
+
+        .well.well-lg
+          = project.description
+
+        %br
+
+        = fa_icon 'user-o'
+
+        %label.control-label
+          Author
+
+        .well.well-sm
+          = project.author.username
+
+        %br
+
+        - if policy(project).project_admin?
+
+          = fa_icon 'heart'
+
+          %label.control-label
+            Status
+
+          .well.well-sm
+            = project.status
+
+          %br
+
+        .inline-form-wrapper
+          = button_to edit_project_path(project), method: :get, class: 'btn btn-warning', disabled: !instance_policy?(:edit) do
+            = fa_icon('pencil')
+            Edit
+
+          %span
+
+          = button_to project, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger', disabled: !instance_policy?(:destroy) do
+            = fa_icon('trash')
+            Delete
+
+        %br
+
+        = link_to 'Back to all projects', projects_path
+
+        %p

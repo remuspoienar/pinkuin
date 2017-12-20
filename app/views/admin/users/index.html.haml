@@ -1,0 +1,59 @@
+.container-fluid
+  .row
+    .col-md-10.col-md-offset-1
+
+      .panel.panel-default.panel-table
+        .panel-heading
+          .row
+            .col.col-xs-6
+              %h3.panel-title User Administration
+
+            .col.col-xs-6.text-right
+              = button_to 'New User', new_admin_user_path, method: :get, class: 'btn btn-sm btn-primary btn-create', disabled: !policy?(:new)
+
+
+          .row
+            .col.col-xs-12.text-center
+              = paginate @users, window: 2, outer_window: 2
+
+
+        .panel-body
+          %table.table.table-striped.table-bordered.table-list.table-responsive
+            %thead
+              %tr
+                %th.col.col-half.text-center
+                  %em.fa.fa-cog
+
+                - User.admin_displayed_columns.each do |column|
+                  %th
+                    = column.to_s.humanize
+
+            %tbody
+              - @users.each do |user|
+                - user_policy = policy(user)
+                %tr
+                  %td.inline-form-wrapper(align="center")
+                    = succeed "\n" do
+                      = button_to admin_user_path(user), method: :get, class: 'btn btn-default', disabled: !user_policy.show? do
+                        = fa_icon('eye')
+
+                    = succeed "\n" do
+                      = button_to edit_admin_user_path(user), method: :get, class: 'btn btn-default', disabled: !user_policy.edit? do
+                        = fa_icon('pencil')
+
+                    = succeed "\n" do
+                      = button_to admin_user_path(user), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger', disabled: !user_policy.destroy? do
+                        = fa_icon('trash')
+
+                  - User.admin_displayed_columns.each do |column|
+                    %td
+                      = user[column] || '(empty)'
+
+        .panel-footer
+          .row
+            .col.col-xs-12
+              Page #{ @users.current_page } of #{ @users.total_pages }
+
+          .row
+            .col.col-xs-12.text-center
+              = paginate @users, window: 2, outer_window: 2

@@ -22,3 +22,28 @@ Things you may want to cover:
 * Deployment instructions
 
 * ...
+* ...
+* ...
+
+
+* convert html tags with classes
+
+    + use regex query
+    
+            <\s*(.*) class="\s*(.*)">                 
+
+    + replace with 
+ 
+            %$1.$2
+
+
+
+* replace erb interpolation 
+
+    + use regex query +
+            
+            <%=?\s*(.*) %>
+
+    + replace with
+    
+            =- $1

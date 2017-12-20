@@ -1,0 +1,54 @@
+.container-fluid
+  .row
+    .col-md-10.col-md-offset-1
+
+      .panel.panel-default.panel-table
+        .panel-heading
+          .row
+            .col.col-xs-6
+              %h3.panel-title
+                All projects
+            .col.col-xs-6.text-right
+              = button_to 'New Project', new_project_path, method: :get, class: 'btn btn-sm btn-primary btn-create', disabled: !policy?(:new)
+
+          .row
+            .col.col-xs-12.text-center
+              = paginate @projects, window: 2, outer_window: 2
+
+        .panel-body
+          %table.table.table-striped.table-bordered.table-list.table-responsive
+            %thead
+              %tr
+                %th.col.col-half.text-center
+                  %em.fa.fa-cog
+
+                - Project.column_names.each do |column|
+                  %th= column.humanize
+
+            %tbody
+              - @projects.each do |project|
+                - project_policy = policy(project)
+
+                %tr
+                  %td.inline-form-wrapper(align="center")
+                    = succeed "\n" do
+                      = button_to project, method: :get, class: 'btn btn-default', disabled: !project_policy.show? do
+                        = fa_icon('eye')
+
+                    = succeed "\n" do
+                      = button_to edit_project_path(project), method: :get, class: 'btn btn-default', disabled: !project_policy.edit? do
+                        = fa_icon('pencil')
+
+                    = button_to project, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger', disabled: !project_policy.destroy? do
+                      = fa_icon('trash')
+
+                  - Project.column_names.each do |column|
+                    %td= project[column] || '(empty)'
+
+        .panel-footer
+          .row
+            .col.col-xs-12
+              Page #{@projects.current_page} of #{@projects.total_pages}
+          .row
+            .col.col-xs-12.text-center
+              = paginate @projects, window: 2, outer_window: 2

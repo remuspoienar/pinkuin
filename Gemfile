@@ -46,6 +46,9 @@ gem 'font-awesome-rails'
 # pagination
 gem 'kaminari'
 
+# templating
+gem 'haml'
+
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 

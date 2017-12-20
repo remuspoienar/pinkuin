@@ -1,0 +1,59 @@
+.container.devise-container
+  .row
+    .col-md-12
+      %h2.form-devise-override-heading USER DETAILS
+
+  .row %br
+
+  .form-base.row
+    .col-md-12
+
+      .text-center
+        %br
+
+        = fa_icon 'envelope-o'
+        %label.control-label
+          Email address
+        .well.well-sm
+          = user.email
+
+        %br
+
+        = fa_icon 'envelope-o'
+        %label.control-label
+          Username
+        .well.well-sm
+          = user.username
+
+        %br
+
+        - if user.roles.any?
+
+          = fa_icon 'user-o'
+          %label.control-label
+            Assigned roles
+
+          .well.well-sm
+            - user.roles.each do |role|
+              %p
+                = role.name + ' : ' + role.resource_type.to_s
+
+          %br
+
+        %div
+          .inline-form-wrapper
+            = button_to edit_admin_user_path(user), method: :get, class: 'btn btn-warning', disabled: !instance_policy?(:edit) do
+              = fa_icon('pencil')
+              Edit
+
+            %span
+
+            = button_to admin_user_path(user), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger', disabled: !instance_policy?(:destroy) do
+              = fa_icon('trash')
+              Delete
+
+          %br
+
+          = link_to 'Back to all users', admin_users_path
+
+          %p
