@@ -10,6 +10,17 @@ class Admin::UsersController < ApplicationController
     @users = policy_scope(User).page(params.fetch(:page, 1)).per(params.fetch(:per, 25))
   end
 
+  def bulk_upload
+    result = ::UserService::Upload.new(users_file).process
+
+    flash_params = if result[:success]
+                     { notice: " #{result[:total]} #{'user'.pluralize(result[:total])} created" }
+                   else
+                     { alert: "Upload was aborted because file contained invalid data. Please fix the problem(s) and try again. Line #{result[:line]} : #{result[:message]}" }
+                   end
+    redirect_to admin_users_url, flash_params
+  end
+
   # GET /admin/users/1
   # GET /admin/users/1.json
   def show
@@ -81,5 +92,9 @@ class Admin::UsersController < ApplicationController
   # Never trust parameters from the scary internet, only allow the white list through.
   def user_params
     params.require(:user).permit(*User.permitted_attributes)
+  end
+
+  def users_file
+    params.permit(:users_file)[:users_file]
   end
 end

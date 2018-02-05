@@ -6,7 +6,9 @@ Rails.application.routes.draw do
   resources :projects
 
   namespace :admin do
-    resources :users
+    resources :users do
+    post :bulk_upload, on: :collection
+    end
   end
 
   root to: 'projects#index'

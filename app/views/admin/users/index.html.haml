@@ -8,9 +8,12 @@
             .col.col-xs-6
               %h3.panel-title User Administration
 
-            .col.col-xs-6.text-right
+            .col.col-xs-6.text-right.inline-form-wrapper
               = button_to 'New User', new_admin_user_path, method: :get, class: 'btn btn-sm btn-primary btn-create', disabled: !policy?(:new)
 
+              = form_tag bulk_upload_admin_users_path, id: :bulk_upload, multipart: true do
+                = label_tag :users_file, 'Upload users', class: 'btn btn-sm btn-primary'
+                = file_field_tag :users_file, required: true, accept: 'text/csv'
 
           .row
             .col.col-xs-12.text-center

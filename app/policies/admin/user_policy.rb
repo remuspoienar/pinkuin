@@ -4,6 +4,10 @@ class Admin::UserPolicy < ApplicationPolicy
     @index ||= user.has_role? :admin, User
   end
 
+  def bulk_upload?
+    @bulk_upload ||= create?
+  end
+
   def show?
     @show ||= index?
   end
