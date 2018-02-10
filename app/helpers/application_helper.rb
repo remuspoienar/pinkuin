@@ -1,4 +1,12 @@
 module ApplicationHelper
+
+  def as_view_formatted(resource, column)
+    column              = column.to_sym
+    view_handler_config = policy_subject_class.const_get(:VIEW_HANDLERS) rescue nil
+    return resource[column] if view_handler_config[column].blank? || resource[column].blank?
+    resource[column].send(*Array(view_handler_config[column]))
+  end
+
   def bootstrap_class_for_alert(alert_type)
     return 'success' if alert_type.in?(%w[notice success])
     'danger' if alert_type.in?(%w[alert danger])

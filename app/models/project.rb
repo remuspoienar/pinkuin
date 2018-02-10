@@ -9,6 +9,12 @@ class Project < ApplicationRecord
   STATUS_ACTIVE   = 'active'.freeze
   STATUS_INACTIVE = 'inactive'.freeze
 
+  VIEW_HANDLERS = {
+      created_at: [:strftime, "%d-%m-%Y %H:%M"],
+      updated_at: [:strftime, "%d-%m-%Y %H:%M"],
+      properties: :to_json
+  }
+
   validates :name, length: { minimum: 6, maximum: 32 }
 
 end

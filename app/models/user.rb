@@ -21,6 +21,12 @@ class User < ApplicationRecord
   ROLE_ACTIONS   = %i[admin read create update destroy].freeze
   ROLE_RESOURCES = [User, Project].freeze
 
+  VIEW_HANDLERS = {
+      confirmed_at:    [:strftime, "%d-%m-%Y %H:%M"],
+      last_sign_in_at: [:strftime, "%d-%m-%Y %H:%M"],
+      created_at:      [:strftime, "%d-%m-%Y %H:%M"]
+  }
+
   # pundit
   def self.policy_class
     Admin::UserPolicy

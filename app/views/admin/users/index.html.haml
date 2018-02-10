@@ -47,7 +47,7 @@
 
                   - User.admin_displayed_columns.each do |column|
                     %td
-                      = user[column] || '(empty)'
+                      = as_view_formatted(user, column) || '(empty)'
 
         .panel-footer
           .row

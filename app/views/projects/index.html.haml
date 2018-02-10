@@ -43,7 +43,8 @@
                       = fa_icon('trash')
 
                   - Project.column_names.each do |column|
-                    %td= project[column] || '(empty)'
+                    %td
+                      = as_view_formatted(project, column) || '(empty)'
 
         .panel-footer
           .row
