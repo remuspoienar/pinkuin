@@ -13,3 +13,6 @@ jQuery ->
     regexp = new RegExp($(this).data('id'), 'g')
     $(this).before($(this).data('fields').replace(regexp, time))
     event.preventDefault()
+
+  $(document).on 'change', '#users_file', (event) ->
+    $('form#bulk_upload').submit()

@@ -45,4 +45,8 @@ class User < ApplicationRecord
   def self.admin_displayed_columns
     %i[email username confirmed_at sign_in_count last_sign_in_at created_at]
   end
+
+  def self.upload_attributes
+    %i[email username]
+  end
 end
