@@ -1,7 +1,7 @@
-.container.devise-container
+.container
   .row
     .col-md-12
-      %h2.form-devise-override-heading
+      %h2.form-heading
         #{project.new_record? ? 'NEW' : 'EDIT'} PROJECT
 
   .row
@@ -9,46 +9,45 @@
 
   = render 'form_errors'
 
-  .form-base.row
-    .col-md-12.no-padding
+  .row
+    .col-md-12
+      = form_for(project, local: true, html: { class: 'form-base text-center no-padding' }) do |f|
 
-      .text-center
+        .pd-em-2
 
-        = form_for(project, local: true, html: { class: 'form-devise-override' }) do |f|
+          %fieldset.text-group
+            = fa_icon 'briefcase'
+            = f.text_field :name, class: 'form-control', placeholder: 'Name of the project'
 
-          .with-padding
+          %br
 
-            %fieldset.email-group
-              = fa_icon 'briefcase'
-              = f.text_field :name, class: 'form-control', placeholder: 'Name of the project'
+          %fieldset.text-group
+            = fa_icon 'pencil'
+            = f.text_area :description, class: 'form-control', placeholder: 'Small description', rows: 5
+
+          %br
+
+          %fieldset.text-group
+            = fa_icon 'user-o'
+            = f.select :author_id, author_select_options, {}, class: 'form-control', placeholder: 'Select author'
+
+          %br
+
+          - if policy(project).project_admin?
+            %fieldset.text-group
+              = fa_icon 'heart'
+              = f.select :status, options_for_select([Project::STATUS_ACTIVE, Project::STATUS_INACTIVE], project.status), {}, class: 'form-control', placeholder: 'Select author'
 
             %br
 
-            %fieldset.email-group
-              = fa_icon 'pencil'
-              = f.text_area :description, class: 'form-control', placeholder: 'Small description'
+          .links
 
-            %br
-
-            %fieldset.email-group
-              = fa_icon 'user-o'
-              = f.select :author_id, author_select_options, {}, class: 'form-control', placeholder: 'Select author'
-
-            %br
-
-            - if policy(project).project_admin?
-              %fieldset.email-group
-                = fa_icon 'heart'
-                = f.select :status, options_for_select([Project::STATUS_ACTIVE, Project::STATUS_INACTIVE], project.status), {}, class: 'form-control', placeholder: 'Select author'
-              %br
-
-            .links
-              - unless project.new_record?
-                %p
-                  = link_to 'Show', project
-
+            - unless project.new_record?
               %p
-                = link_to 'Back to all projects', projects_path
+                = link_to 'Show', project
 
-          .actions
-            = f.submit project.new_record? ? 'create' : 'update', class: 'btn btn-submit'
+            %p
+              = link_to 'Back to all projects', projects_path
+
+        .actions
+          = f.submit project.new_record? ? 'create' : 'update', class: 'btn btn-submit'

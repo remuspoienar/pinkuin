@@ -1,11 +1,11 @@
 class Admin::UserPolicy < ApplicationPolicy
 
   def index?
-    @index ||= user.has_role? :admin, User
+    user_admin?
   end
 
   def bulk_upload?
-    @bulk_upload ||= create?
+    create?
   end
 
   def show?
@@ -22,5 +22,9 @@ class Admin::UserPolicy < ApplicationPolicy
 
   def destroy?
     @destroy ||= update?
+  end
+
+  def user_admin?
+    user.has_role? :admin, User
   end
 end

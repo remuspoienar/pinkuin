@@ -1,0 +1,29 @@
+.container
+  .row
+    .col-md-12
+      %h2.form-heading
+        Resend confirmation instructions
+
+  .row
+    %br
+
+  = render 'devise/shared/error_messages'
+
+  .row
+    .col-md-12
+
+      = form_for(resource, as: resource_name, url: confirmation_path(resource_name), html: { method: :post, class: 'form-base text-center no-padding' }) do |f|
+
+        .pd-em-2
+
+          %fieldset.email-group
+            = fa_icon 'envelope'
+            = f.email_field :email, class: 'form-control', autofocus: true, required: true,autocomplete: 'off', placeholder: 'Email address', value: (resource.pending_reconfirmation? ? resource.unconfirmed_email : resource.email)
+
+          %br
+
+          .links
+            = render 'devise/shared/links'
+
+        .actions
+          = f.submit 'resend confirmation instructions', class: 'btn btn-submit'

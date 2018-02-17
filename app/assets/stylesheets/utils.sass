@@ -1,0 +1,10 @@
+@for $num from 1 through 100
+  @each $unit in px, em, pr
+    @each $position in top, right, left, bottom
+      .pd-#{$position}-#{$unit}-#{$num}
+        padding-#{$position}: $num#{if($unit == 'pr', '%', $unit)}
+      .pd-#{$unit}-#{$num}
+        padding: $num#{if($unit == 'pr', '%', $unit)}
+
+      .h-#{$unit}-#{$num}
+        height: $num#{if($unit == 'pr', '%', $unit)}

@@ -1,47 +1,47 @@
-.container.devise-container
+.container
   .row
     .col-md-12
-      %h2.form-devise-override-heading PROJECT DETAILS
+      %h2.form-heading
+        PROJECT DETAILS
 
-  .row %br
+  .row
+    %br
 
-  .row.form-base
+  .row
     .col-md-12
-      .text-center
+      .show-base
 
-        %br
+        .pd-em-2
 
-        = fa_icon 'briefcase'
+          = fa_icon 'briefcase'
 
-        %label.control-label
-          Name
+          %label.control-label
+            Name
 
-        .well.well-sm
-          = project.name
+          .well.well-sm
+            = project.name
 
-        %br
+          %br
 
-        = fa_icon 'pencil'
+          = fa_icon 'pencil'
 
-        %label.control-label
-          Description
+          %label.control-label
+            Description
 
-        .well.well-lg
-          = project.description
+          .well.well-lg
+            = project.description
 
-        %br
+          %br
 
-        = fa_icon 'user-o'
+          = fa_icon 'user-o'
 
-        %label.control-label
-          Author
+          %label.control-label
+            Author
 
-        .well.well-sm
-          = project.author.username
+          .well.well-sm
+            = project.author.username
 
-        %br
-
-        - if policy(project).project_admin?
+          %br
 
           = fa_icon 'heart'
 
@@ -53,19 +53,18 @@
 
           %br
 
-        .inline-form-wrapper
-          = button_to edit_project_path(project), method: :get, class: 'btn btn-warning', disabled: !instance_policy?(:edit) do
-            = fa_icon('pencil')
-            Edit
+          .inline-form-wrapper
 
-          %span
+            = succeed "\n" do
+              = button_to edit_project_path(project), method: :get, class: 'btn btn-warning', disabled: !instance_policy?(:edit) do
+                = fa_icon('pencil')
+                Edit
 
-          = button_to project, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger', disabled: !instance_policy?(:destroy) do
-            = fa_icon('trash')
-            Delete
+            = succeed "\n" do
+              = button_to project, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger', disabled: !instance_policy?(:destroy) do
+                = fa_icon('trash')
+                Delete
 
-        %br
+          %br
 
-        = link_to 'Back to all projects', projects_path
-
-        %p
+          = link_to 'Back to all projects', projects_path

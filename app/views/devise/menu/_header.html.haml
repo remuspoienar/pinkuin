@@ -1,0 +1,13 @@
+%nav.navbar.navbar-inverse
+  .container
+    .navbar-header
+      = link_to 'Home', projects_path, class: 'navbar-brand'
+
+    #navbar.collapse.navbar-collapse
+      %ul.nav.navbar-nav
+        = render 'devise/menu/registration_items'
+        = render 'devise/menu/login_items'
+
+        - if user_signed_in? && current_user.has_role?(:admin, User)
+          %li
+            = link_to 'User Administration', admin_users_path

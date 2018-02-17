@@ -1,0 +1,106 @@
+.form-base
+  background-color: #eee
+  width: 23.5em
+  height: 100%
+  border-radius: 2%
+  margin: 0 auto 4em
+  box-shadow: 10px 15px 5px 5px $box-shadow-color
+
+.text-group
+  display: flex
+  justify-content: flex-start
+  align-items: center
+
+  .fa
+    color: $background-grey
+    position: relative
+    right: 6%
+
+  .form-control
+    color: $accent-color
+    position: relative
+    right: 2.5%
+    &:focus
+      border-color: $accent-color
+      box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px $accent-color
+
+  .field_with_errors
+    width: 100%
+    position: relative
+    right: 2.5%
+
+    .form-control
+      right: 0
+
+.email-group, .password-group
+  @extend .text-group
+
+.checkbox-group
+  transition: color 0.2s ease-in-out
+  &:hover
+    color: $primary-color
+  [type="checkbox"]
+    vertical-align: -3px
+  label
+    font-weight: bold
+
+.inline-form-wrapper
+  form
+    display: inline-block
+
+.form-heading
+  color: #ccc
+  text-align: center
+  text-shadow: 2px 2px 2px $accent-color
+
+.form-errors
+  color: $danger-color
+
+  h2
+    font-size: 1.7em
+  ul
+    padding-left: 0
+    list-style: none
+
+.links
+  margin: 4em auto 0
+
+  a
+    color: $background-grey
+    text-decoration: none
+    transition: color .2s ease-in-out
+
+    &:hover
+      color: $accent-color
+      border-bottom: 1px solid $primary-color
+
+.btn-submit
+  @extend .btn-warning
+
+  border-top-left-radius: 0
+  border-top-right-radius: 0
+
+  color: #fff
+
+  width: 100%
+  height: 4em
+
+  background: $primary-color
+  text-transform: uppercase
+
+  transition: all 0.2s ease-in-out
+
+  &:hover
+    color: lighten($accent-color, 10%)
+    background: darken($primary-color, 10%)
+
+.btn-submit-danger
+  @extend .btn-submit
+  @extend .btn-danger
+  background: $danger-color
+  border-color: $danger-color
+  border-bottom-left-radius: 3%
+  border-bottom-right-radius: 3%
+
+  &:hover
+    background: lighten($danger-color, 10%)

@@ -1,0 +1,29 @@
+.container
+  .row
+    .col-md-12
+      %h2.form-heading
+        Forgot your password ?
+  
+  .row
+    %br
+  
+  = render 'devise/shared/error_messages'
+  
+  .row
+    .col-md-12
+      
+      = form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post, class: 'form-base text-center no-padding' }) do |f|
+        
+        .pd-em-2
+          
+          %fieldset.email-group
+            = fa_icon 'envelope'
+            = f.email_field :email, class: 'form-control', autofocus: true, autocomplete: 'off', placeholder: 'Email address', required: true
+          
+          %br
+          
+          .links
+            = render 'devise/shared/links'
+        
+        .actions
+          = f.submit 'send me reset instructions', class: 'btn btn-submit'

@@ -1,69 +1,64 @@
-.container.devise-container
+.container
   .row
     .col-md-12
-      %h2.form-devise-override-heading
-        = user.new_record? ? 'NEW' : 'EDIT'
-        USER
+      %h2.form-heading
+        #{user.new_record? ? 'NEW' : 'EDIT'} USER
 
-  .row %br
+  .row
+    %br
 
   = render 'form_errors'
 
-  .form-base.row
-    .col-md-12.no-padding
-      .text-center
+  .row
+    .col-md-12
+      = form_for(user, url: user.new_record? ? admin_users_path : admin_user_path(user), local: true, html: { class: 'form-base text-center no-padding' }) do |f|
 
-        = form_for(user, url: user.new_record? ? admin_users_path : admin_user_path(user), local: true, html: {class: 'form-devise-override'}) do |f|
+        .pd-em-2
 
-          .with-padding.content-height
+          %fieldset.text-group
+            = fa_icon 'envelope'
+            = f.email_field :email, class: 'form-control', autocomplete: 'off', placeholder: 'Email address'
 
-            %fieldset.email-group
-              = fa_icon 'envelope-o'
-              = f.email_field :email, class: 'form-control', autocomplete: 'off', placeholder: 'Email address'
+          %br
+
+          %fieldset.text-group
+            = fa_icon 'user', class: 'pd-right-px-4'
+            = f.text_field :username, class: 'form-control', autocomplete: 'off', placeholder: 'Username'
+
+          %br
+
+          - if user.new_record?
+            %fieldset.text-group
+              = fa_icon 'key'
+              = f.password_field :password, class: 'form-control', autocomplete: 'off', placeholder: "Password (#{minimum_password_length} characters minimum)"
 
             %br
 
-            %fieldset.email-group
-              = fa_icon 'user-o'
-              = f.text_field :username, class: 'form-control', autocomplete: 'off', placeholder: 'Username'
-
+            %fieldset.text-group
+              = fa_icon 'key'
+              = f.password_field :password_confirmation, class: 'form-control', autocomplete: 'off', placeholder: 'Password confirmation'
 
             %br
 
-            - if user.new_record?
-              %fieldset.password-group
-                = fa_icon 'key'
-                = f.password_field :password, class: 'form-control', autocomplete: 'off', placeholder: "Password (#{minimum_password_length} characters minimum)"
 
-              %br
+          %br
+          .roles-wrapper
+            %p Assigned roles
 
-              %fieldset.password-group
-                = fa_icon 'key'
-                = f.password_field :password_confirmation, class: 'form-control', autocomplete: 'off', placeholder: 'Password confirmation'
+            = f.fields_for :roles do |roles_form|
 
+              = render 'role_fields', f: roles_form
 
-              %br
+            = link_to_add_fields 'Add Role', f, :roles
 
+          .links
 
-            .roles-wrapper
-              %p Assigned roles
-
-              = f.fields_for :roles do |roles_form|
-
-                = render 'role_fields', f: roles_form
-
-              = link_to_add_fields 'Add Role', f, :roles
-
-            .links
-
-              - unless user.new_record?
-                %p
-                  = link_to 'Show', admin_user_path(user)
-
+            - unless user.new_record?
               %p
-                = link_to 'Back to all users', admin_users_path
+                = link_to 'Show', admin_user_path(user)
 
-          .actions
-            = f.submit user.new_record? ? 'create' : 'update', class: 'btn btn-submit'
+            %p
+              = link_to 'Back to all users', admin_users_path
 
-%br%br
+        .actions
+          = f.submit user.new_record? ? 'create' : 'update', class: 'btn btn-submit'

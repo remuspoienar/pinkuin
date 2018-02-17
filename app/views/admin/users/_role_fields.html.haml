@@ -1,15 +1,16 @@
 .nested-fields
-  .well.well-sm
+  .well.well-sm.row
+    .col-sm-12
 
-    %fieldset.email-group
-      = f.label :name, class: 'control-label'
-      = f.select :name, options_for_select(User::ROLE_ACTIONS, f.object.name), {}, class: 'form-control', placeholder: 'Select action'
-
-
-    %fieldset.email-group
-      = f.label :resource_type, class: 'control-label'
-      = f.select :resource_type, options_for_select(Rolify.resource_types.uniq, f.object.resource_type), {}, class: 'form-control', placeholder: 'Select resource'
+      %fieldset.text-group.form-group.row
+        = f.label :name, class: 'control-label col-md-6'
+        = f.select :name, options_for_select(User::ROLE_ACTIONS, f.object.name), {}, class: 'form-control col-md-6', placeholder: 'Select action'
 
 
-    %fieldset.email-group
-      = link_to_remove_fields "Remove Role", f
+      %fieldset.text-group.form-group.row
+        = f.label :resource_type, class: 'control-label col-md-6'
+        = f.select :resource_type, options_for_select(Rolify.resource_types.uniq, f.object.resource_type), {}, class: 'form-control col-md-6', placeholder: 'Select resource'
+
+
+      %fieldset.text-group
+        = link_to_remove_fields "Remove Role", f

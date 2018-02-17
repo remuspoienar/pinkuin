@@ -1,13 +1,13 @@
 - if user.errors.any?
+
   .form-base.row
-    .col-md-12.no-padding.form-errors
-      .text-center
-        .with-padding
-          #error_explanation
-            %h2 #{ pluralize(user.errors.count, "error") } prohibited this user from being saved:
+    .col-md-12.no-padding.text-center
+      .form-errors
+        %h2
+          #{ pluralize(user.errors.count, 'error') } prohibited this user from being saved:
 
-            %ul
-              - user.errors.full_messages.each do |message|
-                %li= message
-
+        %ul
+          - user.errors.full_messages.each do |message|
+            %li
+              = message
   %br%br
