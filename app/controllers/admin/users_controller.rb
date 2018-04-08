@@ -1,8 +1,8 @@
 class Admin::UsersController < ApplicationController
 
-  before_action :set_and_authorize_user!, only: %i[show edit update destroy]
+  before_action :set_and_authorize_user!, only: %i(show edit update destroy)
 
-  before_action :authorize_user_action!, only: %i[index new create]
+  before_action :authorize_user_action!, only: %i(index new create)
 
   # GET /admin/users
   # GET /admin/users.json
@@ -39,9 +39,11 @@ class Admin::UsersController < ApplicationController
   # POST /admin/users.json
   def create
     @user = User.new(user_params)
+    user.skip_confirmation! if Rails.env.development?
 
     respond_to do |format|
       if user.save
+        current_user.add_role :admin, user
         format.html { redirect_to admin_user_path(user), notice: 'User was successfully created.' }
         format.json { render :show, status: :created, location: user }
       else
@@ -91,7 +93,7 @@ class Admin::UsersController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def user_params
-    params.require(:user).permit(*User.permitted_attributes)
+    params.require(:user).permit(:email, :username, :password, :password_confirmation, roles_attributes: %i(_destroy id name resource_type resource_id))
   end
 
   def users_file

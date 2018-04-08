@@ -1,5 +1,7 @@
 module ProjectsHelper
 
+  attr_reader :project
+
   def author_select_options
     @author_select_options ||= options_for_select(author_collection, project.new_record? ? [] : [author.username, author.id])
   end
@@ -10,10 +12,6 @@ module ProjectsHelper
 
   def author
     @author ||= project.author
-  end
-
-  def project
-    @project
   end
 
 end

@@ -10,7 +10,7 @@ class UserService::Upload
   def process
     ActiveRecord::Base.transaction do
       rows.each_with_index do |row, line|
-        @line  = line + 1
+        @line       = line + 1
         user_params = { roles_attributes: [] }
         row.each_with_index do |value, index|
           column = header[index].to_sym
