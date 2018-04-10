@@ -1,28 +1,28 @@
 class ProjectPolicy < ApplicationPolicy
 
+  # actions
+
   def index?
-    @index ||= true
+    general_project_admin? || instance_project_admin? || create?
   end
 
   def show?
-    @show ||= index?
+    project_admin? || general_project_admin?
   end
 
   def create?
-    @create ||= (user.has_role? :create, Project) || project_admin?
+    project_creator? || general_project_admin?
   end
 
   def update?
-    @update ||= (record.author == user) || project_admin?
+    show?
   end
 
   def destroy?
-    @destroy ||= update? || project_admin?
+    show?
   end
 
-  def project_admin?
-    @project_admin ||= user.has_role? :admin, Project
-  end
+  # scope
 
   class Scope < Scope
 
@@ -35,6 +35,24 @@ class ProjectPolicy < ApplicationPolicy
         end
       end
     end
+  end
+
+  private
+
+  def project_creator?
+    user.has_role? :create, Project
+  end
+
+  def project_admin?
+    record.author_id == user.id
+  end
+
+  def instance_project_admin?
+    user.projects.any?
+  end
+
+  def general_project_admin?
+    user.has_role? :admin, Project
   end
 
 end

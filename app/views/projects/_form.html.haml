@@ -33,7 +33,7 @@
 
           %br
 
-          - if policy(project).project_admin?
+          - if policy(project).general_project_admin?
             %fieldset.text-group
               = fa_icon 'heart'
               = f.select :status, options_for_select([Project::STATUS_ACTIVE, Project::STATUS_INACTIVE], project.status), {}, class: 'form-control', placeholder: 'Select author'
