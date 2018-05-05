@@ -1,0 +1,72 @@
+.container
+  .row
+    .col-md-12
+      %h2.form-heading
+        ROLE DETAILS
+
+  .row
+    %br
+
+  .row
+    .col-md-12
+      .show-base
+
+        .pd-em-2
+
+          = fa_icon 'universal-access'
+
+          %label.control-label
+            Role name
+
+          .well.well-sm
+            = role.name
+
+          %br
+
+          = fa_icon 'unlock-alt'
+
+          %label.control-label
+            Resource
+
+          .well.well-sm
+            = role.resource_type
+
+          %br
+
+          - if role.resource_id.present?
+
+            = fa_icon 'clone'
+
+            %label.control-label
+              ID of resource
+
+            .well.well-sm
+              = role.resource_id
+
+            %br
+
+          %label.control-label
+            Users with this role
+
+          .well.well-lg
+            - role.users_roles.each do |users_role|
+              %p
+                User (#{users_role.user_id})
+
+            = '(None)' if role.users_roles.empty?
+
+          .inline-form-wrapper
+
+            = succeed "\n" do
+              = button_to edit_admin_role_path(role), method: :get, class: 'btn btn-warning', disabled: !instance_policy?(:edit) do
+                = fa_icon('pencil')
+                Edit
+
+            = succeed "\n" do
+              = button_to admin_role_path(role), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger', disabled: !instance_policy?(:destroy) do
+                = fa_icon('trash')
+                Delete
+
+          %br
+
+          = link_to 'Back to all roles', admin_roles_path

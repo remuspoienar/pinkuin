@@ -9,9 +9,10 @@ class User < ApplicationRecord
 
   # ASSOCIATIONS
   has_many :projects, foreign_key: :author_id
-  has_many :users_roles
-  has_many :roles, through: :users_roles
+  has_many :users_roles, dependent: :destroy#, validate: true
+  has_many :roles, through: :users_roles#, validate: true
 
+  accepts_nested_attributes_for :users_roles, allow_destroy: true, reject_if: :all_blank
   accepts_nested_attributes_for :roles, allow_destroy: true, reject_if: :all_blank
 
   # VALIDATIONS
@@ -20,6 +21,10 @@ class User < ApplicationRecord
   # ROLES
   resourcify
   rolify
+
+  def self.for_select_options
+    self.pluck(:email, :id)
+  end
 
   ROLE_ACTIONS   = %i(admin read create update destroy).freeze
   ROLE_RESOURCES = [User, Project].freeze

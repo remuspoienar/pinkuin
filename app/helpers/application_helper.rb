@@ -3,7 +3,7 @@ module ApplicationHelper
   def as_view_formatted(resource, column)
     column              = column.to_sym
     view_handler_config = policy_subject_class.const_get(:VIEW_HANDLERS) rescue nil
-    return resource[column] if view_handler_config[column].blank? || resource[column].blank?
+    return resource[column] if view_handler_config.nil? || view_handler_config[column].blank? || resource[column].blank?
     resource[column].send(*Array(view_handler_config[column]))
   end
 

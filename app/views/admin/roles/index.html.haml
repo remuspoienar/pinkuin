@@ -1,0 +1,58 @@
+.container-fluid
+  .row
+    .col-md-10.col-md-offset-1
+
+      .panel.panel-default.panel-table
+        .panel-heading
+          .row
+            .col.col-xs-6
+              %h3.panel-title Roles Administration
+
+            .col.col-xs-6.text-right.inline-form-wrapper
+              = button_to 'New Role', new_admin_role_path, method: :get, class: 'btn btn-sm btn-primary btn-create', disabled: !policy?(:new)
+
+          .row
+            .col.col-xs-12.text-center
+              = paginate @roles, window: 2, outer_window: 2
+
+
+        .panel-body
+          %table.table.table-striped.table-bordered.table-list.table-responsive
+            %thead
+              %tr
+                %th.col.col-half.text-center
+                  %em.fa.fa-cog
+
+                - Role.admin_displayed_columns.each do |column|
+                  %th
+                    = column.to_s.humanize
+
+            %tbody
+              - @roles.each do |role|
+                - role_policy = policy(role)
+                %tr
+                  %td.inline-form-wrapper(align="center")
+                    = succeed "\n" do
+                      = button_to admin_role_path(role), method: :get, class: 'btn btn-default', disabled: !role_policy.show? do
+                        = fa_icon('eye')
+
+                    = succeed "\n" do
+                      = button_to edit_admin_role_path(role), method: :get, class: 'btn btn-default', disabled: !role_policy.edit? do
+                        = fa_icon('pencil')
+
+                    = succeed "\n" do
+                      = button_to admin_role_path(role), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger', disabled: !role_policy.destroy? do
+                        = fa_icon('trash')
+
+                  - Role.admin_displayed_columns.each do |column|
+                    %td
+                      = as_view_formatted(role, column) || '(empty)'
+
+        .panel-footer
+          .row
+            .col.col-xs-12
+              Page #{ @roles.current_page } of #{ @roles.total_pages }
+
+          .row
+            .col.col-xs-12.text-center
+              = paginate @roles, window: 2, outer_window: 2

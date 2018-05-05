@@ -17,4 +17,8 @@ class Project < ApplicationRecord
 
   validates :name, length: { minimum: 6, maximum: 32 }
 
+  def self.for_select_options
+    self.pluck(:name, :id)
+  end
+
 end

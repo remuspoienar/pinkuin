@@ -43,7 +43,8 @@ class Admin::UsersController < ApplicationController
 
     respond_to do |format|
       if user.save
-        current_user.add_role :admin, user
+        current_user.add_role(:admin, user)
+        update_user_roles
         format.html { redirect_to admin_user_path(user), notice: 'User was successfully created.' }
         format.json { render :show, status: :created, location: user }
       else
@@ -57,7 +58,7 @@ class Admin::UsersController < ApplicationController
   # PATCH/PUT /admin/users/1.json
   def update
     respond_to do |format|
-      if user.update_attributes(user_params)
+      if user.update_attributes(user_params) && update_user_roles
         format.html { redirect_to admin_user_path(user), notice: 'User was successfully updated.' }
         format.json { render :show, status: :ok, location: user }
       else
@@ -91,9 +92,22 @@ class Admin::UsersController < ApplicationController
     authorize user || User
   end
 
-  # Never trust parameters from the scary internet, only allow the white list through.
+  def update_user_roles
+    result        = ::UserService::Roles.new(user: user, roles: roles_params).assign
+    flash[:alert] = result[:message] unless result[:success]
+    result[:success]
+  end
+
+  def all_user_params
+    params.require(:user).permit(:email, :username, :password, :password_confirmation, roles_attributes: %i(_destroy id name resource_type role_type resource_id))
+  end
+
   def user_params
-    params.require(:user).permit(:email, :username, :password, :password_confirmation, roles_attributes: %i(_destroy id name resource_type resource_id))
+    all_user_params.except(:roles_attributes)
+  end
+
+  def roles_params
+    all_user_params[:roles_attributes]
   end
 
   def users_file

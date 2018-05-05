@@ -11,3 +11,5 @@
         - if user_signed_in? && policy(current_user).index?
           %li
             = link_to 'User Administration', admin_users_path
+          %li
+            = link_to 'Roles Administration', admin_roles_path

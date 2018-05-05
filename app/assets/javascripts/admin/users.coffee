@@ -4,7 +4,7 @@
 
 jQuery ->
   $('form').on 'click', '.remove_fields', (event) ->
-    $(this).prev('input[type=hidden]').val('1')
+    $(this).prev('input[type=hidden]').val(true)
     $(this).closest('.nested-fields').hide()
     event.preventDefault()
 

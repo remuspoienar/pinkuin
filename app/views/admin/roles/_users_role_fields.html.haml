@@ -1,0 +1,10 @@
+.users_role-attributes.nested-fields
+  .well.well-sm.row
+    .col-sm-12
+
+      %fieldset.text-group.form-group.row
+        = f.label :user_id, class: 'control-label col-md-6'
+        = f.select :user_id, options_for_select(User.for_select_options, f.object.user_id), {}, class: 'role-resource_id form-control col-md-6'
+
+      %fieldset.text-group
+        = link_to_remove_fields 'Remove user link from role', f

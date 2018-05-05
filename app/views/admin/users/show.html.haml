@@ -41,7 +41,7 @@
           .well.well-lg
             - user.roles.each do |role|
               %p
-                = role.name + ' : ' + role.resource_type.to_s
+                = role
 
             = '(None)' if user.roles.empty?
 

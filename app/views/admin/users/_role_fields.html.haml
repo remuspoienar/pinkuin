@@ -1,16 +1,27 @@
-.nested-fields
+.role-attributes.nested-fields
   .well.well-sm.row
     .col-sm-12
 
       %fieldset.text-group.form-group.row
         = f.label :name, class: 'control-label col-md-6'
-        = f.select :name, options_for_select(User::ROLE_ACTIONS, f.object.name), {}, class: 'form-control col-md-6', placeholder: 'Select action'
-
+        = f.select :name, options_for_select(User::ROLE_ACTIONS, f.object.name), {}, class: 'role-name form-control col-md-6'
 
       %fieldset.text-group.form-group.row
         = f.label :resource_type, class: 'control-label col-md-6'
-        = f.select :resource_type, options_for_select(Rolify.resource_types.uniq, f.object.resource_type), {}, class: 'form-control col-md-6', placeholder: 'Select resource'
+        = f.select :resource_type, options_for_select(Rolify.resource_types.uniq, f.object.resource_type), {}, class: 'role-resource_type form-control col-md-6'
 
+      %fieldset.text-group.form-group.row
+        = f.label :role_type, class: 'control-label col-md-6'
+        = f.select :role_type, options_for_select(Role::ROLE_TYPES, f.object.role_type), {}, class: 'role-role_type form-control col-md-6'
+
+        = f.hidden_field :resource_id, value: nil # this is needed for update, if type is changed to general,
+        # otherwise will not be passed and not used in the query. That way the existing one is found and a 302 response is returned
+
+      %fieldset.text-group.form-group.row
+        - option_values = f.object.general? ? [] : f.object.resource_id_options
+
+        = f.label :resource_id, class: 'control-label col-md-6'
+        = f.select :resource_id, options_for_select(option_values, f.object.resource_id), {}, class: 'role-resource_id form-control col-md-6', disabled: f.object.general?
 
       %fieldset.text-group
-        = link_to_remove_fields "Remove Role", f
+        = link_to_remove_fields 'Remove Role', f

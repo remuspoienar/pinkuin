@@ -1,0 +1,13 @@
+- if role.errors.any?
+
+  .form-base.row
+    .col-md-12.no-padding.text-center
+      .form-errors
+        %h2
+          #{ pluralize(role.errors.count, 'error') } prohibited this role from being saved:
+
+        %ul
+          - role.errors.full_messages.each do |message|
+            %li
+              = message
+  %br%br

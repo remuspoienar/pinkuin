@@ -11,7 +11,7 @@ class Admin::UserPolicy < ApplicationPolicy
   end
 
   def show?
-    user_admin? || general_user_admin?
+    user_admin? || general_user_admin? || self?
   end
 
   def create?
@@ -19,11 +19,11 @@ class Admin::UserPolicy < ApplicationPolicy
   end
 
   def update?
-    show?
+    show? && !self?
   end
 
   def destroy?
-    show?
+    show? && !self?
   end
 
   # scope
@@ -35,9 +35,9 @@ class Admin::UserPolicy < ApplicationPolicy
         if user.has_role? :admin, User
           scope.all
         elsif (roles = user.roles_for_any_instance?(:admin, User)).any?
-          scope.where(id: roles.pluck(:resource_id))
+          scope.where(id: roles.pluck(:resource_id) << user.id)
         else
-          User.where(id: nil)
+          scope.where(id: user.id)
         end
       end
     end
@@ -59,6 +59,10 @@ class Admin::UserPolicy < ApplicationPolicy
 
   def general_user_admin?
     user.has_role? :admin, User
+  end
+
+  def self?
+    user.id == record.id
   end
 
 end
