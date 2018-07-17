@@ -5,6 +5,8 @@ Rails.application.routes.draw do
 
   resources :projects
 
+  get 'projects/js_test/:folder_id' => 'projects#js_test'
+
   namespace :admin do
     resources :users do
       post :bulk_upload, on: :collection

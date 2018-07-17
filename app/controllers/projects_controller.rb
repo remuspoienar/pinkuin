@@ -66,6 +66,10 @@ class ProjectsController < ApplicationController
     end
   end
 
+  def js_test
+    @folder_id = params[:folder_id]
+  end
+
   private
 
   attr_reader :project

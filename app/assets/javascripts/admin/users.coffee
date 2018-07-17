@@ -16,3 +16,6 @@ jQuery ->
 
   $(document).on 'change', '#users_file', (event) ->
     $('form#bulk_upload').submit()
+
+
+console.log 8888

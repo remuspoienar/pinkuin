@@ -18,3 +18,5 @@ jQuery ->
     else
       resource_id.html(null)
       resource_id.attr('disabled', true)
+
+console.log 9999
