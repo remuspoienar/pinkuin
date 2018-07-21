@@ -77,7 +77,7 @@ class ProjectsController < ApplicationController
   end
 
   def authorize_project_action!
-    authorize project || Project
+    authorize(project || Project)
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.
