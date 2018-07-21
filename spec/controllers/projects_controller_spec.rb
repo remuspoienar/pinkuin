@@ -8,8 +8,6 @@ describe ProjectsController, type: :controller do
 
     subject { get :index }
 
-    let!(:projects) { create_list(:project, 2) }
-
     context 'with unauthenticated user' do
       it 'returns a failure response' do
         subject
@@ -18,7 +16,7 @@ describe ProjectsController, type: :controller do
     end
 
     context 'with authenticated user' do
-      before { sign_in(user) }
+      before { authenticate_user(user) }
 
       context 'with unauthorized user' do
         it 'returns a failure response' do
@@ -28,18 +26,14 @@ describe ProjectsController, type: :controller do
       end
 
       context 'with authorized user' do
-        # if user is the author then he should see the projects
-        let!(:projects) { create_list(:project, 2, author: user) }
+        before { authorize_action_on_resource(:index, Project) }
 
         it 'returns a success response' do
           subject
           expect(response).to be_success
         end
       end
-
     end
-
-
   end
 
   describe 'GET #show' do
@@ -56,7 +50,7 @@ describe ProjectsController, type: :controller do
     end
 
     context 'with authenticated user' do
-      before { sign_in(user) }
+      before { authenticate_user(user) }
 
       context 'with unauthorized user' do
         it 'returns a failure response' do
@@ -66,17 +60,14 @@ describe ProjectsController, type: :controller do
       end
 
       context 'with authorized user' do
-        # if user is author then he can be 'show'ed the project
-        let(:project) { create(:project, author: user) }
+        before { authorize_action_on_resource(:show, project) }
 
         it 'returns a success response' do
           subject
           expect(response).to be_success
         end
       end
-
     end
-
   end
 
   describe 'GET #new' do
@@ -91,7 +82,7 @@ describe ProjectsController, type: :controller do
     end
 
     context 'with authenticated user' do
-      before { sign_in(user) }
+      before { authenticate_user(user) }
 
       context 'with unauthorized user' do
         it 'returns a failure response' do
@@ -101,17 +92,14 @@ describe ProjectsController, type: :controller do
       end
 
       context 'with authorized user' do
-        before { user.add_role(:create, Project) }
+        before { authorize_action_on_resource(:new, Project) }
 
         it 'returns a success response' do
           subject
           expect(response).to be_success
         end
       end
-
     end
-
-
   end
 
   describe 'GET #edit' do
@@ -128,7 +116,7 @@ describe ProjectsController, type: :controller do
     end
 
     context 'with authenticated user' do
-      before { sign_in(user) }
+      before { authenticate_user(user) }
 
       context 'with unauthorized user' do
         it 'returns a failure response' do
@@ -138,17 +126,14 @@ describe ProjectsController, type: :controller do
       end
 
       context 'with authorized user' do
-        # if user is author then he can be 'show'ed the project
-        let(:project) { create(:project, author: user) }
+        before { authorize_action_on_resource(:edit, project) }
 
         it 'returns a success response' do
           subject
           expect(response).to be_success
         end
       end
-
     end
-
   end
 
   describe 'POST #create' do
@@ -164,7 +149,7 @@ describe ProjectsController, type: :controller do
     end
 
     context 'with authenticated user' do
-      before { sign_in(user) }
+      before { authenticate_user(user) }
 
       context 'with unauthorized user' do
         it 'returns a failure response' do
@@ -174,7 +159,7 @@ describe ProjectsController, type: :controller do
       end
 
       context 'with authorized user' do
-        before { user.add_role(:create, Project) }
+        before { authorize_action_on_resource(:create, Project) }
 
         context 'with valid params' do
           it 'creates a new Project' do
@@ -188,7 +173,7 @@ describe ProjectsController, type: :controller do
         end
 
         context 'with invalid params' do
-          let(:project_attributes) { attributes_for(:project).except(:name) }
+          let(:project_attributes) { attributes_for(:project).merge(name: 'short') }
 
           it 'returns a success response (i.e. to display the "new" template)' do
             subject
@@ -219,7 +204,7 @@ describe ProjectsController, type: :controller do
     end
 
     context 'with authenticated user' do
-      before { sign_in(user) }
+      before { authenticate_user(user) }
 
       context 'with unauthorized user' do
         it 'returns a failure response' do
@@ -229,8 +214,7 @@ describe ProjectsController, type: :controller do
       end
 
       context 'with authorized user' do
-        # if user is author then he can be 'update' the project
-        let!(:project) { create(:project, author: user) }
+        before { authorize_action_on_resource(:update, project) }
 
         context 'with valid params' do
           it 'updates the project' do
@@ -274,7 +258,7 @@ describe ProjectsController, type: :controller do
     end
 
     context 'with authenticated user' do
-      before { sign_in(user) }
+      before { authenticate_user(user) }
 
       context 'with unauthorized user' do
         it 'returns a failure response' do
@@ -284,8 +268,7 @@ describe ProjectsController, type: :controller do
       end
 
       context 'with authorized user' do
-        # if user is author then he can be destroy the project
-        let(:project) { create(:project, author: user) }
+        before { authorize_action_on_resource(:destroy, project) }
 
         it 'destroys the requested project' do
           expect { subject }.to change(Project, :count).by(-1)

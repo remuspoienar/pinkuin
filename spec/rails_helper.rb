@@ -8,6 +8,7 @@ require 'rspec/rails'
 # Add additional requires below this line. Rails is not loaded until this point!
 
 require 'devise/test/controller_helpers'
+require_relative 'support/auth_helper'
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
@@ -61,6 +62,8 @@ RSpec.configure do |config|
 
   config.include Devise::Test::ControllerHelpers, type: :controller
   config.include FactoryGirl::Syntax::Methods
+
+  config.include Support::AuthHelper, type: :controller
 
   config.before(:suite) do
     DatabaseCleaner.strategy = :transaction
