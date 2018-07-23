@@ -56,8 +56,14 @@ group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
   gem 'dotenv-rails'
+
   gem 'faker'
+  gem 'shoulda-matchers'
+  gem 'factory_bot_rails'
+
+
   gem 'rspec-rails'
+  gem 'cucumber-rails', require: false
 end
 
 group :development do
@@ -71,8 +77,6 @@ end
 
 group :test do
   gem 'database_cleaner'
-  gem 'factory_girl_rails'
-  gem 'shoulda-matchers'
-  gem 'faker'
   gem 'simplecov', require: false
+  gem 'rails-controller-testing'
 end
