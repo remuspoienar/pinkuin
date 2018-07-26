@@ -88,8 +88,3 @@ Shoulda::Matchers.configure do |config|
     with.library :rails
   end
 end
-
-
-# (byebug) policy_scope(Project).instance_variables.map{|ivar| [ivar.to_s.tr('@', ''), policy_scope(Project).instance_variable_get(ivar).class]}.to_h.symbolize_keys
-# {:klass=>Class, :table=>Arel::Table, :values=>Hash, :offsets=>Hash, :loaded=>NilClass, :predicate_builder=>ActiveRecord::PredicateBuilder, :arel=>NilClass, :scope_for_create=>NilClass, :order_clause=>NilClass, :to_sql=>NilClass, :last=>NilClass, :join_dependency=>NilClass, :should_eager_load=>NilClass, :records=>Array, :where_clause_factory=>ActiveRecord::Relation::WhereClauseFactory}
-#

@@ -1,6 +1,7 @@
-username = 'remuspoienar+123'
-email    = Faker::Internet.email
-password = Faker::Internet.password
+user_data = FactoryBot.attributes_for(:user)
+username  = user_data[:username]
+email     = user_data[:email]
+password  = user_data[:password]
 
 Given('I visit the homepage') do
   visit root_path
