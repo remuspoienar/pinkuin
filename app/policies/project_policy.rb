@@ -3,7 +3,8 @@ class ProjectPolicy < ApplicationPolicy
   # actions
 
   def index?
-    general_project_admin? || instance_project_admin? || create?
+    # general_project_admin? || instance_project_admin? || create?
+    true
   end
 
   def show?

@@ -60,6 +60,7 @@ group :development, :test do
   gem 'faker'
   gem 'shoulda-matchers'
   gem 'factory_bot_rails'
+  gem 'email_spec'
 
 
   gem 'rspec-rails'
