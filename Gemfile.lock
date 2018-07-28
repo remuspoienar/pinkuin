@@ -126,7 +126,6 @@ GEM
     haml (5.0.4)
       temple (>= 0.8.0)
       tilt
-    headless (2.3.1)
     htmlentities (4.3.4)
     i18n (0.8.6)
     jbuilder (2.7.0)
@@ -314,7 +313,6 @@ DEPENDENCIES
   faker
   font-awesome-rails
   haml
-  headless
   jbuilder (~> 2.5)
   jquery-rails
   kaminari
