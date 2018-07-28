@@ -4,6 +4,20 @@ RSpec.describe ProjectsController, type: :controller do
 
   let(:user) { instance_double(User) }
 
+  shared_examples 'a failure response' do
+    it 'returns a failure response' do
+      subject
+      expect(response).to_not be_success
+    end
+  end
+
+  shared_examples 'a success response' do
+    it 'returns a success response' do
+      subject
+      expect(response).to be_success
+    end
+  end
+
   describe 'GET #index' do
 
     subject { get :index }
@@ -13,10 +27,7 @@ RSpec.describe ProjectsController, type: :controller do
     before { set_resource_scope(:project, projects) }
 
     context 'with unauthenticated user' do
-      it 'returns a failure response' do
-        subject
-        expect(response).to_not be_success
-      end
+      it_behaves_like 'a failure response'
     end
 
     context 'with authenticated user' do
@@ -27,10 +38,7 @@ RSpec.describe ProjectsController, type: :controller do
         expect(assigns(:projects)).to eq projects
       end
 
-      it 'returns a success response' do
-        subject
-        expect(response).to be_success
-      end
+      it_behaves_like 'a success response'
     end
   end
 
@@ -44,10 +52,7 @@ RSpec.describe ProjectsController, type: :controller do
     before { allow(Project).to receive(:find).and_return(project) }
 
     context 'with unauthenticated user' do
-      it 'returns a failure response' do
-        subject
-        expect(response).to_not be_success
-      end
+      it_behaves_like 'a failure response'
     end
 
     context 'with authenticated user' do
@@ -56,10 +61,7 @@ RSpec.describe ProjectsController, type: :controller do
       context 'with unauthorized user' do
         before { fail_authorization_for_action_on_resource(:show, :project) }
 
-        it 'returns a failure response' do
-          subject
-          expect(response).to_not be_success
-        end
+        it_behaves_like 'a failure response'
       end
 
       context 'with authorized user' do
@@ -70,10 +72,7 @@ RSpec.describe ProjectsController, type: :controller do
           expect(assigns(:project)).to eq project
         end
 
-        it 'returns a success response' do
-          subject
-          expect(response).to be_success
-        end
+        it_behaves_like 'a success response'
       end
     end
   end
@@ -84,10 +83,7 @@ RSpec.describe ProjectsController, type: :controller do
     subject { get :new }
 
     context 'with unauthenticated user' do
-      it 'returns a failure response' do
-        subject
-        expect(response).to_not be_success
-      end
+      it_behaves_like 'a failure response'
     end
 
     context 'with authenticated user' do
@@ -96,19 +92,13 @@ RSpec.describe ProjectsController, type: :controller do
       context 'with unauthorized user' do
         before { fail_authorization_for_action_on_resource(:new, :project) }
 
-        it 'returns a failure response' do
-          subject
-          expect(response).to_not be_success
-        end
+        it_behaves_like 'a failure response'
       end
 
       context 'with authorized user' do
         before { authorize_action_on_resource(:new, :project) }
 
-        it 'returns a success response' do
-          subject
-          expect(response).to be_success
-        end
+        it_behaves_like 'a success response'
       end
     end
   end
@@ -123,10 +113,7 @@ RSpec.describe ProjectsController, type: :controller do
     before { allow(Project).to receive(:find).and_return(project) }
 
     context 'with unauthenticated user' do
-      it 'returns a failure response' do
-        subject
-        expect(response).to_not be_success
-      end
+      it_behaves_like 'a failure response'
     end
 
     context 'with authenticated user' do
@@ -135,10 +122,7 @@ RSpec.describe ProjectsController, type: :controller do
       context 'with unauthorized user' do
         before { fail_authorization_for_action_on_resource(:edit, :project) }
 
-        it 'returns a failure response' do
-          subject
-          expect(response).to_not be_success
-        end
+        it_behaves_like 'a failure response'
       end
 
       context 'with authorized user' do
@@ -149,10 +133,7 @@ RSpec.describe ProjectsController, type: :controller do
           expect(assigns(:project)).to eq project
         end
 
-        it 'returns a success response' do
-          subject
-          expect(response).to be_success
-        end
+        it_behaves_like 'a success response'
       end
     end
   end
@@ -169,10 +150,7 @@ RSpec.describe ProjectsController, type: :controller do
     before { allow(Project).to receive(:new).and_return(project) }
 
     context 'with unauthenticated user' do
-      it 'returns a failure response' do
-        subject
-        expect(response).to_not be_success
-      end
+      it_behaves_like 'a failure response'
     end
 
     context 'with authenticated user' do
@@ -181,14 +159,16 @@ RSpec.describe ProjectsController, type: :controller do
       context 'with unauthorized user' do
         before { fail_authorization_for_action_on_resource(:create, :project) }
 
-        it 'returns a failure response' do
-          subject
-          expect(response).to_not be_success
-        end
+        it_behaves_like 'a failure response'
       end
 
       context 'with authorized user' do
         before { authorize_action_on_resource(:create, :project) }
+
+        it 'calls save on the project' do
+          expect(project).to receive(:save).exactly(:once)
+          subject
+        end
 
         context 'with successful save' do
           before { allow(project).to receive(:save).and_return(true) }
@@ -233,10 +213,7 @@ RSpec.describe ProjectsController, type: :controller do
     before { allow(Project).to receive(:find).and_return(project) }
 
     context 'with unauthenticated user' do
-      it 'returns a failure response' do
-        subject
-        expect(response).to_not be_success
-      end
+      it_behaves_like 'a failure response'
     end
 
     context 'with authenticated user' do
@@ -245,14 +222,16 @@ RSpec.describe ProjectsController, type: :controller do
       context 'with unauthorized user' do
         before { fail_authorization_for_action_on_resource(:update, :project) }
 
-        it 'returns a failure response' do
-          subject
-          expect(response).to_not be_success
-        end
+        it_behaves_like 'a failure response'
       end
 
       context 'with authorized user' do
         before { authorize_action_on_resource(:update, :project) }
+
+        it 'calls update on the project' do
+          expect(project).to receive(:update).exactly(:once)
+          subject
+        end
 
         context 'with successful update' do
           before { allow(project).to receive(:update).and_return(true) }
@@ -298,10 +277,7 @@ RSpec.describe ProjectsController, type: :controller do
     end
 
     context 'with unauthenticated user' do
-      it 'returns a failure response' do
-        subject
-        expect(response).to_not be_success
-      end
+      it_behaves_like 'a failure response'
     end
 
     context 'with authenticated user' do
@@ -310,10 +286,7 @@ RSpec.describe ProjectsController, type: :controller do
       context 'with unauthorized user' do
         before { fail_authorization_for_action_on_resource(:destroy, :project) }
 
-        it 'returns a failure response' do
-          subject
-          expect(response).to_not be_success
-        end
+        it_behaves_like 'a failure response'
       end
 
       context 'with authorized user' do
@@ -326,7 +299,7 @@ RSpec.describe ProjectsController, type: :controller do
 
         it 'notifies of success' do
           subject
-          expect(flash[:notice]).to eq 'Project was successfully destroyed.'
+          expect(flash[:notice]).to eq 'Project was successfully deleted.'
         end
 
         it 'redirects to the projects list' do

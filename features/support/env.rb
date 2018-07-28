@@ -57,3 +57,41 @@ end
 # See https://github.com/cucumber/cucumber-rails/blob/master/features/choose_javascript_database_strategy.feature
 Cucumber::Rails::Database.javascript_strategy = :truncation
 
+# =Lifecycle hooks
+
+Before do
+  if Capybara.current_driver == :selenium
+    require 'headless'
+
+    @headless = Headless.new
+    @headless.start
+  end
+end
+
+After do
+  if Capybara.current_driver == :selenium
+    @headless.stop
+  end
+end
+# Lifecycle hooks=
+
+# =Shared steps
+
+When(/I click on the ([\w ]+) button$/) do |link_or_btn_name|
+  click_link_or_button link_or_btn_name
+end
+
+Given('I visit the homepage') do
+  visit root_path
+end
+
+Given('I am logged in') do
+  visit root_path
+
+  fill_in 'user_email', with: @registered_user.email
+  fill_in 'user_password', with: @registered_user.password
+
+  click_button 'Log in'
+end
+
+# Shared steps=

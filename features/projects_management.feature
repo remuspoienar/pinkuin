@@ -20,4 +20,22 @@ Feature: Projects Management
     When I visit the homepage
     When I click on the New Project button
     And I fill in the project's details
-    Then I should see that my project was created
+    And I click on the create button
+    Then I should see that my project was saved
+
+
+  Scenario: Updating the details of a project
+    Given I have previously created a project
+    When I go to the project's page
+    And I click on the Edit button
+    And I fill in the project's details
+    And I click on the update button
+    Then I should see that my project was saved
+
+
+  @javascript
+  Scenario: Deleting a project
+    Given I have previously created a project
+    When I go to the project's page
+    And I click the delete button
+    Then I should not see it in the projects list anymore

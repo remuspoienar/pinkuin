@@ -22,5 +22,5 @@ Feature: Authentication
     Given I am a registered user
     And I am logged in
     And I visit the homepage
-    When I click on the log out button
+    When I click on the Log out button
     Then I should be redirected to the log in page
