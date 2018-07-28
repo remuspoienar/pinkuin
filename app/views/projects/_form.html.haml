@@ -23,20 +23,26 @@
 
           %fieldset.text-group
             = fa_icon 'pencil'
-            = f.text_area :description, class: 'form-control', placeholder: 'Small description', rows: 5
+            = f.text_area :description, class: 'form-control', placeholder: 'Small description', rows: 2
 
           %br
 
-          %fieldset.text-group
-            = fa_icon 'user-o'
-            = f.select :author_id, author_select_options, {}, class: 'form-control', placeholder: 'Select author'
+          - if show_author_field?
 
-          %br
+            %fieldset.text-group
+              = fa_icon 'user-o'
+              = f.select :author_id, author_select_options, {}, class: 'form-control', placeholder: 'Select author'
 
-          - if policy(project).general_project_admin?
+            %br
+
+          - else
+            = f.hidden_field :author_id, value: current_user.id
+
+
+          - if show_status_field?
             %fieldset.text-group
               = fa_icon 'heart'
-              = f.select :status, options_for_select([Project::STATUS_ACTIVE, Project::STATUS_INACTIVE], project.status), {}, class: 'form-control', placeholder: 'Select author'
+              = f.select :status, status_select_options, {}, class: 'form-control', placeholder: 'Select author'
 
             %br
 

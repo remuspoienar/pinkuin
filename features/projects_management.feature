@@ -15,8 +15,9 @@ Feature: Projects Management
     Then I should see the list of my projects
 
 
-#  Scenario: Creating projects
-#    When I visit the homepage
-#    And I click on the New Project button
-#    And I fill in the project fields
-#    Then I should see my project's page
+  Scenario: Creating a new project
+    Given I have the right to create projects
+    When I visit the homepage
+    When I click on the New Project button
+    And I fill in the project's details
+    Then I should see that my project was created
