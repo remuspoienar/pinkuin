@@ -11,8 +11,9 @@ module Support
 
     def set_resource_scope(resource, result)
       result                = Array(result)
-      invalid_type_detected = result.map(&:class).map(&:name).map(&:underscore).find { |res| res != resource.to_s }
-      raise "Not all elements in result are of type#{resource.to_s.camelize}" if invalid_type_detected
+      resource_class        = resource_class(resource)
+      invalid_type_detected = result.find { |result_el| !(result_el.is_a?(resource_class) || result_el.is_a?(RSpec::Mocks::TestDouble)) }
+      raise "Not all elements in result are of type #{resource.to_s.camelize}" if invalid_type_detected
 
       scope_mock = Kaminari.paginate_array(Array(result))
       allow(Pundit).to receive(:policy_scope!).and_return(scope_mock)
@@ -32,8 +33,11 @@ module Support
     private
 
     def policy_class_for_resource(resource)
-      resource_class = resource.to_s.underscore.camelize.constantize
-      "#{resource_class}Policy".constantize
+      "#{resource_class(resource)}Policy".constantize
+    end
+
+    def resource_class(name)
+      name.to_s.underscore.camelize.constantize
     end
   end
 end

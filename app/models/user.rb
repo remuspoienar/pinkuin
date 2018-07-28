@@ -8,7 +8,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable, :confirmable, :lockable
 
   # ASSOCIATIONS
-  has_many :projects, foreign_key: :author_id
+  has_many :projects, foreign_key: :author_id, dependent: :destroy
   has_many :users_roles, dependent: :destroy#, validate: true
   has_many :roles, through: :users_roles#, validate: true
 

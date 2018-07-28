@@ -2,11 +2,15 @@ require 'rails_helper'
 
 RSpec.describe ProjectsController, type: :controller do
 
-  let(:user) { create(:user) }
+  let(:user) { instance_double(User) }
 
   describe 'GET #index' do
 
     subject { get :index }
+
+    let(:projects) { [instance_double(Project)] }
+
+    before { set_resource_scope(:project, projects) }
 
     context 'with unauthenticated user' do
       it 'returns a failure response' do
@@ -17,6 +21,11 @@ RSpec.describe ProjectsController, type: :controller do
 
     context 'with authenticated user' do
       before { authenticate_user(user) }
+
+      it 'fetches the projects in the scope of the user' do
+        subject
+        expect(assigns(:projects)).to eq projects
+      end
 
       it 'returns a success response' do
         subject
@@ -30,7 +39,7 @@ RSpec.describe ProjectsController, type: :controller do
 
     subject { get :show, params: { id: project.to_param } }
 
-    let(:project) { build_stubbed(:project) }
+    let(:project) { instance_double(Project) }
 
     before { allow(Project).to receive(:find).and_return(project) }
 
@@ -55,6 +64,11 @@ RSpec.describe ProjectsController, type: :controller do
 
       context 'with authorized user' do
         before { authorize_action_on_resource(:show, :project) }
+
+        it 'fetches the project' do
+          subject
+          expect(assigns(:project)).to eq project
+        end
 
         it 'returns a success response' do
           subject
@@ -104,7 +118,7 @@ RSpec.describe ProjectsController, type: :controller do
 
     subject { get :edit, params: { id: project.to_param } }
 
-    let(:project) { build_stubbed(:project) }
+    let(:project) { instance_double(Project) }
 
     before { allow(Project).to receive(:find).and_return(project) }
 
@@ -129,6 +143,11 @@ RSpec.describe ProjectsController, type: :controller do
 
       context 'with authorized user' do
         before { authorize_action_on_resource(:edit, :project) }
+
+        it 'fetches the project' do
+          subject
+          expect(assigns(:project)).to eq project
+        end
 
         it 'returns a success response' do
           subject
@@ -174,6 +193,11 @@ RSpec.describe ProjectsController, type: :controller do
         context 'with successful save' do
           before { allow(project).to receive(:save).and_return(true) }
 
+          it 'notifies of success' do
+            subject
+            expect(flash[:notice]).to eq 'Project was successfully created.'
+          end
+
           it 'redirects to the created project' do
             subject
             expect(response).to redirect_to(project)
@@ -189,8 +213,8 @@ RSpec.describe ProjectsController, type: :controller do
           end
 
           it 'renders new' do
-            expect(controller).to receive(:render).once.with(:new)
             subject
+            expect(response).to render_template(:new)
           end
         end
       end
@@ -233,6 +257,11 @@ RSpec.describe ProjectsController, type: :controller do
         context 'with successful update' do
           before { allow(project).to receive(:update).and_return(true) }
 
+          it 'notifies of success' do
+            subject
+            expect(flash[:notice]).to eq 'Project was successfully updated.'
+          end
+
           it 'redirects to the updated project' do
             subject
             expect(response).to redirect_to(project)
@@ -248,8 +277,8 @@ RSpec.describe ProjectsController, type: :controller do
           end
 
           it 'renders edit' do
-            expect(controller).to receive(:render).once.with(:edit)
             subject
+            expect(response).to render_template(:edit)
           end
         end
       end
@@ -261,7 +290,7 @@ RSpec.describe ProjectsController, type: :controller do
 
     subject { delete :destroy, params: { id: project.to_param } }
 
-    let(:project) { build_stubbed(:project) }
+    let(:project) { instance_double(Project) }
 
     before do
       allow(Project).to receive(:find).and_return(project)
@@ -293,6 +322,11 @@ RSpec.describe ProjectsController, type: :controller do
         it 'destroys the requested project' do
           expect(project).to receive(:destroy)
           subject
+        end
+
+        it 'notifies of success' do
+          subject
+          expect(flash[:notice]).to eq 'Project was successfully destroyed.'
         end
 
         it 'redirects to the projects list' do

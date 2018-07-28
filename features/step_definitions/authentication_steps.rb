@@ -32,7 +32,7 @@ end
 
 
 Given('I am a registered user') do
-  FactoryBot.create(:user, username: username, email: email, password: password)
+  @registered_user = FactoryBot.create(:user, username: username, email: email, password: password)
 end
 
 When('I fill in the login form') do
@@ -43,7 +43,7 @@ When('I fill in the login form') do
 end
 
 Then('I should be logged in') do
-  expect(page).to have_content('Signed in successfully.')
+  expect(page).to have_content('All projects')
 end
 
 
