@@ -81,5 +81,4 @@ group :test do
   gem 'simplecov', require: false
   gem 'rails-controller-testing'
   gem 'selenium-webdriver'
-  gem 'headless'
 end
