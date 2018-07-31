@@ -28,27 +28,11 @@ Then('I should see that my project was saved') do
 end
 
 Given("I have previously created a project") do
-  page.driver.browser.capabilities['moz:headless'] = true unless page.driver.browser.is_a? Capybara::RackTest::Browser
   @old_project = FactoryBot.create(:project, author: @registered_user)
 end
 
 When("I go to the project's page") do
   visit project_path(@old_project)
-end
-
-When("I change the details of my project") do
-  @project = FactoryBot.build(:project)
-
-  fill_in 'project_name', with: @project.name
-  fill_in 'project_description', with: @project.description
-
-  click_button 'update'
-end
-
-When("I click the delete button") do
-  click_button 'Delete'
-
-  page.accept_confirm
 end
 
 Then("I should not see it in the projects list anymore") do

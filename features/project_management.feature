@@ -1,4 +1,4 @@
-Feature: Projects Management
+Feature: Project Management
 
   In order to manage projects
   As a user
@@ -37,5 +37,5 @@ Feature: Projects Management
   Scenario: Deleting a project
     Given I have previously created a project
     When I go to the project's page
-    And I click the delete button
+    And I click the delete button and confirm
     Then I should not see it in the projects list anymore
