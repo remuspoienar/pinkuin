@@ -2,7 +2,7 @@ class Admin::UsersController < ApplicationController
 
   before_action :set_and_authorize_user!, only: %i(show edit update destroy)
 
-  before_action :authorize_user_action!, only: %i(index new create)
+  before_action :authorize_user_action!, only: %i(new create)
 
   # GET /admin/users
   # GET /admin/users.json
@@ -39,12 +39,10 @@ class Admin::UsersController < ApplicationController
   # POST /admin/users.json
   def create
     @user = User.new(user_params)
-    user.skip_confirmation! if Rails.env.development?
+    user.skip_confirmation!
 
     respond_to do |format|
-      if user.save
-        current_user.add_role(:admin, user)
-        update_user_roles
+      if user.save && update_roles
         format.html { redirect_to admin_user_path(user), notice: 'User was successfully created.' }
         format.json { render :show, status: :created, location: user }
       else
@@ -58,7 +56,7 @@ class Admin::UsersController < ApplicationController
   # PATCH/PUT /admin/users/1.json
   def update
     respond_to do |format|
-      if user.update_attributes(user_params) && update_user_roles
+      if user.update(user_params) && update_user_roles
         format.html { redirect_to admin_user_path(user), notice: 'User was successfully updated.' }
         format.json { render :show, status: :ok, location: user }
       else
@@ -89,13 +87,17 @@ class Admin::UsersController < ApplicationController
   end
 
   def authorize_user_action!
-    authorize user || User
+    authorize(user || User)
   end
 
   def update_user_roles
-    result        = ::UserService::Roles.new(user: user, roles: roles_params).assign
+    result        = ::UserService::Roles.assign(user: user, roles: roles_params)
     flash[:alert] = result[:message] unless result[:success]
     result[:success]
+  end
+
+  def update_roles
+    current_user.add_role(:admin, user) && update_user_roles
   end
 
   def all_user_params

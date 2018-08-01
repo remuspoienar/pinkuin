@@ -3,7 +3,8 @@ class Admin::UserPolicy < ApplicationPolicy
   # actions
 
   def index?
-    general_user_admin? || instance_user_admin? || create?
+    # general_user_admin? || instance_user_admin? || create?
+    true
   end
 
   def bulk_upload?

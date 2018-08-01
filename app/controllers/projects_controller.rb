@@ -2,9 +2,9 @@ class ProjectsController < ApplicationController
 
   before_action :authenticate_user!
 
-  before_action :set_and_authorize_project!, only: %i[show edit update destroy]
+  before_action :set_and_authorize_project!, only: %i(show edit update destroy)
 
-  before_action :authorize_project_action!, only: %i[index new create]
+  before_action :authorize_project_action!, only: %i(new create)
 
   # GET /projects
   # GET /projects.json
