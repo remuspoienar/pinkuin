@@ -1,5 +1,9 @@
 class UserService::Roles
 
+  def self.assign(user:, roles:)
+    new(user: user, roles: roles).assign
+  end
+
   def initialize(user:, roles:)
     @user  = user
     @roles = roles.to_h.values

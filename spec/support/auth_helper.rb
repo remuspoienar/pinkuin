@@ -33,7 +33,9 @@ module Support
     private
 
     def policy_class_for_resource(resource)
-      "#{resource_class(resource)}Policy".constantize
+      resource_class    = resource_class(resource)
+      policy_class_name = resource_class.respond_to?(:policy_class) ? resource_class.policy_class : "#{resource_class}Policy"
+      policy_class_name.constantize
     end
 
     def resource_class(name)

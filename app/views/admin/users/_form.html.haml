@@ -27,18 +27,18 @@
 
           %br
 
-          - if user.new_record?
-            %fieldset.text-group
-              = fa_icon 'key'
-              = f.password_field :password, class: 'form-control', autocomplete: 'off', placeholder: "Password (#{minimum_password_length} characters minimum)"
 
-            %br
+          %fieldset.text-group
+            = fa_icon 'key'
+            = f.password_field :password, class: 'form-control', autocomplete: 'off', placeholder: "Password (#{minimum_password_length} characters minimum)"
 
-            %fieldset.text-group
-              = fa_icon 'key'
-              = f.password_field :password_confirmation, class: 'form-control', autocomplete: 'off', placeholder: 'Password confirmation'
+          %br
 
-            %br
+          %fieldset.text-group
+            = fa_icon 'key'
+            = f.password_field :password_confirmation, class: 'form-control', autocomplete: 'off', placeholder: 'Password confirmation'
+
+          %br
 
 
           %br
