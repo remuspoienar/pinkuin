@@ -13,13 +13,13 @@ Feature: User Management
 
   @create_users
   Scenario: Listing users
-    When I click on the User Administration button
+    When I visit the User Administration page
     Then I should see the list of registered users
 
 
   Scenario: Creating a new user
     Given I have the right to create users
-    And I visit the User Administration page
+    When I visit the User Administration page
     And I click on the New User button
     And I fill in the user's details
     And I click on the create button
