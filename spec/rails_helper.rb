@@ -9,6 +9,7 @@ require 'rspec/rails'
 
 require 'devise/test/controller_helpers'
 require_relative 'support/auth_helper'
+require_relative 'support/env_helper'
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
@@ -65,6 +66,7 @@ RSpec.configure do |config|
   config.include FactoryBot::Syntax::Methods
 
   config.include Support::AuthHelper, type: :controller
+  config.include Support::EnvHelper
 
   config.before(:suite) do
     DatabaseCleaner.strategy = :transaction
@@ -74,6 +76,19 @@ RSpec.configure do |config|
   config.around(:each) do |example|
     DatabaseCleaner.cleaning do
       example.run
+    end
+  end
+
+  config.include Formulaic::Dsl, type: :feature
+
+  if Bullet.enable?
+    config.before(:each) do
+      Bullet.start_request
+    end
+
+    config.after(:each) do
+      Bullet.perform_out_of_channel_notifications if Bullet.notification?
+      Bullet.end_request
     end
   end
 end
