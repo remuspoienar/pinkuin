@@ -4,8 +4,6 @@ source 'https://rubygems.org'
 
 gem 'rails', '~> 5.1.4'
 gem 'pg', '~> 0.18'
-gem 'puma', '~> 3.7'
-
 
 # authentication
 gem 'devise'
@@ -35,8 +33,11 @@ gem 'coffee-rails', '~> 4.2'
 gem 'jquery-rails'
 gem 'turbolinks', '~> 5'
 
-gem 'uglifier', '>= 1.3.0'
+# background processing
+gem 'sidekiq'
 
+# other
+gem 'uglifier', '>= 1.3.0'
 gem 'therubyracer', platforms: :ruby
 gem 'jbuilder', '~> 2.5'
 gem 'redis', '~> 3.0'
@@ -80,4 +81,9 @@ group :test do
   gem 'selenium-webdriver'
   gem 'formulaic'
   gem 'climate_control'
+end
+
+group :production do
+  gem 'rails_12factor'
+  gem 'puma', '~> 3.7'
 end

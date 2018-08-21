@@ -1,0 +1,39 @@
+.container
+  .row
+    .col-md-12
+      %h2.form-heading
+        You are in !
+
+  .row
+    %br
+
+  .row
+    .col-md-12
+      .show-base
+
+        .pd-em-2
+
+          - if @resource.present?
+            = fa_icon 'envelope'
+
+            %label.control-label
+              Email address
+
+            .well.well-sm
+              = @resource.email
+
+            %br
+
+            = fa_icon 'user'
+
+            %label.control-label
+              Username
+
+            .well.well-sm
+              = @resource.username
+
+            %br
+
+          .links
+            = render 'devise/shared/links'
+

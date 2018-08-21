@@ -7,6 +7,10 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :confirmable, :lockable
 
+  def send_devise_notification(notification, *args)
+    OutgoingEmailWorker.perform_async(notification, id, *args)
+  end
+
   # ASSOCIATIONS
   has_many :projects, foreign_key: :author_id, dependent: :destroy
   has_many :users_roles, dependent: :destroy#, validate: true
