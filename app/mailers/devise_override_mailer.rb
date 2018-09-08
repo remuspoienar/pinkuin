@@ -4,6 +4,6 @@ class DeviseOverrideMailer < Devise::Mailer
 
   default template_path: 'devise/mailer'
 
-  default from: 'Pinkuin app <app@pinkuin.xyz>'
-  default reply_to: 'Pinkuin app <no-reply@pinkuin.xyz>'
+  default from: "Pinkuin app <app@#{ENV['SMTP_DOMAIN']}>"
+  default reply_to: "no reply <no-reply@#{ENV['SMTP_DOMAIN']}>"
 end

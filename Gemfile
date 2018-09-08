@@ -78,9 +78,9 @@ group :test do
   gem 'database_cleaner'
   gem 'simplecov', require: false
   gem 'rails-controller-testing'
-  gem 'selenium-webdriver'
   gem 'formulaic'
   gem 'climate_control'
+  gem 'capybara-webkit'
 end
 
 group :production do

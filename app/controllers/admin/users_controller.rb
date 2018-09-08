@@ -39,7 +39,7 @@ class Admin::UsersController < ApplicationController
   # POST /admin/users.json
   def create
     @user = User.new(user_params)
-    # user.skip_confirmation!
+    user.skip_confirmation!
 
     respond_to do |format|
       if user.save && update_roles

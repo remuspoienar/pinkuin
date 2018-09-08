@@ -1,9 +1,9 @@
 # =Shared steps
 
 When("I click the delete button and confirm") do
-  click_button 'Delete'
-
-  page.accept_confirm
+  accept_confirm do
+    click_button 'Delete'
+  end
 end
 
 When(/I click on the ([\w ]+) button$/) do |link_or_btn_name|

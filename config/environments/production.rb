@@ -45,7 +45,7 @@ Rails.application.configure do
   # config.action_cable.allowed_request_origins = [ 'http://example.com', /http:\/\/example.*/ ]
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
-  config.force_ssl = true
+  # config.force_ssl = true
 
   # Use the lowest log level to ensure availability of diagnostic information
   # when problems arise.
@@ -69,13 +69,13 @@ Rails.application.configure do
   config.action_mailer.default_url_options = { host: ENV['APP_URL'] }
 
   config.action_mailer.delivery_method = :smtp
-  ActionMailer::Base.smtp_settings = {
-      address:              'smtp.mailgun.org',
-      port:                 '587',
+  ActionMailer::Base.smtp_settings     = {
+      user_name:            ENV['SMTP_USERNAME'],
+      password:             ENV['SMTP_PASSWORD'],
+      domain:               ENV['SMTP_DOMAIN'],
+      address:              ENV['SMTP_ADDRESS'],
+      port:                 ENV['SMTP_PORT'],
       authentication:       :plain,
-      user_name:            ENV['MAILGUN_USERNAME'],
-      password:             ENV['MAILGUN_PASSWORD'],
-      domain:               ENV['MAILGUN_DOMAIN'],
       enable_starttls_auto: true
   }
 

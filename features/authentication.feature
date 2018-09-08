@@ -7,7 +7,9 @@ Feature: Authentication
   Scenario: Signing up
     Given I visit the homepage
     When I fill in the sign up form
-    And I confirm the email
+    And I open the email with subject "Confirmation instructions"
+    Then I should see the email delivered from "Pinkuin app <app@pinkuin.club>"
+    When I follow "Confirm my account" in the email
     Then I should see that my account is confirmed
 
 
