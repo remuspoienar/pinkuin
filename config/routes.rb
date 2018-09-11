@@ -14,7 +14,9 @@ Rails.application.routes.draw do
 
   #= sidekiq
 
-  mount Sidekiq::Web, at: '/sidekiq'
+ authenticate :user, ->(user) { user.has_role?(:sidekiq_viewer)} do
+   mount Sidekiq::Web, at: '/sidekiq'
+ end
 
 
   #= application
