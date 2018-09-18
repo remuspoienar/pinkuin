@@ -55,7 +55,7 @@ Rails.application.configure do
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
   config.force_ssl = true
-  # config.ssl_options = { redirect: { port: 3000 }, hsts: { subdomains: true } }
+  config.ssl_options = { redirect: { port: ENV.fetch('PORT', 3000) }, hsts: { subdomains: true } }
 
   config.after_initialize do
     Bullet.enable = true
