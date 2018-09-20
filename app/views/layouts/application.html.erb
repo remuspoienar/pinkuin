@@ -8,8 +8,6 @@
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
     <%= action_cable_meta_tag %>
-
-    <%= javascript_include_tag 'comodo', 'data-turbolinks-track': 'reload' %>
   </head>
 
   <body>
@@ -17,9 +15,5 @@
     <%= render 'layouts/flash' %>
 
     <%= yield %>
-
-    <div class="comodo-seal">
-      <%= javascript_include_tag 'comodo-seal', 'data-turbolinks-track': 'reload' %>
-    </div>
   </body>
 </html>

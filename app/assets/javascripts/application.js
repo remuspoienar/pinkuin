@@ -15,7 +15,4 @@
 //= require bootstrap-sprockets
 //= require turbolinks
 
-//= stub comodo
-//= stub comodo-seal
-
 //= require_tree .
