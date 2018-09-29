@@ -43,6 +43,7 @@ gem 'jbuilder', '~> 2.5'
 gem 'redis', '~> 3.0'
 
 gem 'puma'
+gem 'sentry-raven'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
