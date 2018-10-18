@@ -2,7 +2,7 @@ ruby '2.5.1'
 
 source 'https://rubygems.org'
 
-gem 'rails', '~> 5.1.4'
+gem 'rails', '~> 5.2'
 gem 'pg', '~> 0.18'
 
 # authentication
@@ -41,6 +41,7 @@ gem 'uglifier', '>= 1.3.0'
 gem 'therubyracer', platforms: :ruby
 gem 'jbuilder', '~> 2.5'
 gem 'redis', '~> 3.0'
+gem 'bootsnap'
 
 gem 'puma'
 gem 'sentry-raven'
@@ -50,7 +51,6 @@ gem 'sentry-raven'
 
 group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
-  gem 'dotenv-rails'
 
   gem 'faker'
   gem 'shoulda-matchers'
@@ -76,6 +76,8 @@ group :development do
   gem 'spring-commands-rspec'
   gem 'spring-commands-cucumber'
   gem 'foreman'
+  gem 'rubocop'
+  gem 'rubocop-rspec'
 end
 
 group :test do

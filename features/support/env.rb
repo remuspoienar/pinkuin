@@ -60,3 +60,5 @@ Cucumber::Rails::Database.javascript_strategy = :truncation
 
 Capybara.javascript_driver = :webkit
 Capybara.server = :webrick
+
+ENV['SMTP_DOMAIN'] ||= 'pinkuin.club'
