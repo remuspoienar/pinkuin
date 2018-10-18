@@ -66,6 +66,10 @@ class ProjectsController < ApplicationController
     end
   end
 
+  def sentry
+    raise params[:message]
+  end
+
   private
 
   attr_reader :project

@@ -14,14 +14,18 @@ Rails.application.routes.draw do
 
   #= sidekiq
 
- authenticate :user, ->(user) { user.has_role?(:sidekiq_viewer)} do
-   mount Sidekiq::Web, at: '/sidekiq'
- end
+  authenticate :user, ->(user) { user.has_role?(:sidekiq_viewer) } do
+    mount Sidekiq::Web, at: '/sidekiq'
+  end
 
 
   #= application
 
-  resources :projects
+  resources :projects do
+    collection do
+      get 'sentry'
+    end
+  end
 
   namespace :admin do
     resources :users do
